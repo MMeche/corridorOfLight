@@ -1,4 +1,4 @@
-#include "3D_tools.h"
+#include "../inc/3D_tools.h"
 
 /* Camera parameters and functions */
 float theta = 45.0f; // Angle between x axis and viewpoint

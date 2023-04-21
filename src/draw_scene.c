@@ -1,6 +1,24 @@
 #include "../inc/draw_scene.h"
 #include "../inc/3D_tools.h"
 
+void drawCorridor(){
+    glPushMatrix();
+    glColor3f(1,0.,0.);
+    glScalef(4.,35.,0.);
+    drawSquare();
+    glPopMatrix();
+
+    glPushMatrix();
+    glColor3f(0.9,0.8,0.2);
+    glScalef(1.,35.,4.);
+    glRotatef(90.0, 0., 1., 0.);
+    glTranslatef(1., 0., 0.);
+    
+    drawSquare();
+    glPopMatrix();
+    
+}
+
 void drawBase() 
 {
     glPushMatrix();
@@ -11,7 +29,7 @@ void drawBase()
         glScalef(2.,2.,10.);
         drawCone();
     glPopMatrix();
-    je sappelle groot:
+    //je sappelle groot:
 }
 
 void drawArm() 
