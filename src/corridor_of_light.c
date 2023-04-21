@@ -130,17 +130,56 @@ int main(int argc, char** argv)
 		setCamera();
 
 		/* Initial scenery setup */
-		glPushMatrix();
-			glTranslatef(0.0,0.0,-0.01);
-			glScalef(10.0,10.0,1.0);
-			glColor3f(0.0,0.0,0.1);
-			drawSquare();
-		glPopMatrix();
-		drawFrame();
+		// glPushMatrix();
+		// 	glTranslatef(0.0,0.0,-0.01);
+		// 	glScalef(10.0,10.0,1.0);
+		// 	glColor3f(0.0,0.0,0.1);
+		// 	drawSquare();
+		// glPopMatrix();
+		// drawFrame();
 
 		/* Scene rendering */
 		
+<<<<<<< HEAD
 		
+=======
+		drawCorridor();
+		// glColor3f(0.9,0.8,0.2);
+		// drawBase();
+		// glPushMatrix();
+		// 	if(flag_animate_rot_scale == 1)
+		// 	{
+		// 		glRotatef(angle_scale,0.,0.,1.);
+		// 	}
+		// 	glPushMatrix();
+		// 		glTranslatef(0.,0.,10.);
+		// 		glRotatef(90,1.,0.,0.);
+		// 		drawArm();
+		// 	glPopMatrix();
+		// 	glPushMatrix();
+		// 		glRotatef(90,0.,0.,1.);
+		// 		glPushMatrix();
+		// 			glTranslatef(0.,10,10.);
+		// 			drawPan();
+		// 		glPopMatrix();
+		// 		glPushMatrix();
+		// 			glTranslatef(0.,-10,10.);
+		// 			drawPan();
+		// 		glPopMatrix();
+		// 	glPopMatrix();
+		// glPopMatrix();
+		/* Sphère 
+		glPushMatrix();	
+			Première Méthode 
+				glTranslatef(4.*cos(toRad(angle)),4*sin(toRad(angle)),5.0);
+				drawSphere();
+			Seconde Methode
+				glTranslatef(4.,0.,0.);
+				glRotatef(angle,0.,0.,1.);
+				glTranslatef(0.,0.,5.);
+				drawSphere();	
+		glPopMatrix(); */
+>>>>>>> 719bebf3df20bd53f71b7807fbf22fce18009b7c
 		
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);

@@ -13,3 +13,5 @@ void drawBase();
 void drawArm();
 
 void drawPan();
+
+void drawCorridor();
