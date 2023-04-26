@@ -140,9 +140,9 @@ int main(int argc, char** argv)
 
 		/* Scene rendering */
 		
-<<<<<<< HEAD
+
 		
-=======
+
 		drawCorridor();
 		// glColor3f(0.9,0.8,0.2);
 		// drawBase();
@@ -179,7 +179,7 @@ int main(int argc, char** argv)
 				glTranslatef(0.,0.,5.);
 				drawSphere();	
 		glPopMatrix(); */
->>>>>>> 719bebf3df20bd53f71b7807fbf22fce18009b7c
+
 		
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);

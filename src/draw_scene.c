@@ -29,7 +29,7 @@ void drawBase()
         glScalef(2.,2.,10.);
         drawCone();
     glPopMatrix();
-    je sappelle groot:
+    
 }
 
 void drawArm() 
