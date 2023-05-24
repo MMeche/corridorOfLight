@@ -1,9 +1,9 @@
 #include "../inc/3D_tools.h"
 
 /* Camera parameters and functions */
-float theta = 0.0f; // Angle between x axis and viewpoint
-float phy = 0.0f; // Angle between z axis and viewpoint
-float dist_zoom = 0.0f; // Distance between origin and viewpoint
+float theta = 90.0f; // Angle between x axis and viewpoint
+float phy = 90.0f; // Angle between z axis and viewpoint
+float dist_zoom = 5.0f; // Distance between origin and viewpoint
 
 void setCamera() {
 	gluLookAt(dist_zoom*cos(toRad(theta))*sin(toRad(phy)),
@@ -19,8 +19,9 @@ float toRad(float deg) {
 }
 
 
-void drawSquare() {
+void drawSquare(float r,float g,float b) {
 	glBegin(GL_TRIANGLE_FAN);
+		glColor3f(r,g,b);
 		glVertex3f(-0.5,-0.5,0.0);
 		glVertex3f(0.5,-0.5,0.0);
 		glVertex3f(0.5,0.5,0.0);

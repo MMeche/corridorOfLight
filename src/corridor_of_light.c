@@ -26,6 +26,12 @@ static int flag_animate_rot_arm = 0;
 double angle = 0; // en degré
 double angle_scale = 0;
 
+/*Menu Handlers*/
+static int started = 1;
+static int rules = 0;
+static int quit = 0;
+static int menu = 0;
+
 /* Error handling function */
 void onError(int error, const char* description)
 {
@@ -76,14 +82,21 @@ void onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
 				break;
 			case GLFW_KEY_LEFT :
 				theta -= 5;
+				printf("Theta %f\n",theta);
 				break;
 			case GLFW_KEY_RIGHT :
 				theta += 5;
+				printf("Theta %f\n",theta);
 				break;
 			default: fprintf(stdout,"Touche non gérée (%d)\n",key);
 		}
 	}
 }
+
+void onClick(GLFWwindow* window,int mouseButton, int scancode, int action, int mods)
+{
+
+};
 
 int main(int argc, char** argv)
 {drawFrame();
@@ -108,6 +121,7 @@ int main(int argc, char** argv)
 
 	glfwSetWindowSizeCallback(window,onWindowResized);
 	glfwSetKeyCallback(window, onKey);
+	/*glfwSetMouseButtonCallback(window,onClick);*/
 
 	onWindowResized(window,WINDOW_WIDTH,WINDOW_HEIGHT);
 
@@ -128,20 +142,35 @@ int main(int argc, char** argv)
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		setCamera();
+		
 
 		/* Initial scenery setup */
-		// glPushMatrix();
-		// 	glTranslatef(0.0,0.0,-0.01);
-		// 	glScalef(10.0,10.0,1.0);
-		// 	glColor3f(0.0,0.0,0.1);
-		// 	drawSquare();
-		// glPopMatrix();
-		// drawFrame();
+		
+		drawFrame();
 
 		/* Scene rendering */
-		drawCorridor();
-		drawCircle();
 		
+
+		if(started == 1)
+		{
+			drawCorridor();
+			glPushMatrix();
+				glRotatef(180.,0.,1.,0.);
+				drawCorridor();
+			glPopMatrix();
+			//ballz();
+			//drawHUD();
+		}
+		if(menu==1)
+		{
+			//drawMenu();
+		}
+		if(rules==1)
+		{
+
+		}
+
+
 		
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
