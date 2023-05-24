@@ -40,7 +40,6 @@ void drawCircle() {
 			glVertex3f(cos(i * step_rad), sin(i * step_rad), 0.0f);
 		}
 	glEnd();
-	glScalef(0.5,0.5,1.);
 	glPopMatrix();
 }
 
