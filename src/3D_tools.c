@@ -29,6 +29,16 @@ void drawSquare(float r,float g,float b) {
 	glEnd();
 }
 
+void drawCarre() {
+    glBegin(GL_LINE_LOOP);
+    //glColor3f(r, g, b);
+    glVertex3f(-0.5, -0.5, 0.0);
+    glVertex3f(0.5, -0.5, 0.0);
+    glVertex3f(0.5, 0.5, 0.0);
+    glVertex3f(-0.5, 0.5, 0.0);
+    glEnd();
+}
+
 void drawCircle() {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();

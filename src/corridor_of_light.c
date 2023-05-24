@@ -158,9 +158,19 @@ int main(int argc, char** argv)
 				glRotatef(180.,0.,1.,0.);
 				drawCorridor();
 			glPopMatrix();
-			glTranslatef(0.,-2.5,-1.2);
-			glScalef(0.5, 0.5, 0.5);
-			drawCircle();
+			
+			glPushMatrix();
+				glTranslatef(0.,-2.5,-1.2);
+				glScalef(0.5, 0.5, 0.5);
+				drawCircle();
+			glPopMatrix();
+			glPushMatrix();
+				glColor3f(1., 0.5, 0.);
+				glRotatef(90.,1.,0.,0.);
+				drawCarre(0., 0., 0.);
+			glPopMatrix();
+			
+			
 			
 			//ballz();
 			//drawHUD();
