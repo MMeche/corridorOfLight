@@ -30,14 +30,22 @@ void drawSquare(float r,float g,float b) {
 }
 
 void drawCircle() {
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glRotatef(90.0f, 1.0f, 0.0f, 0.0f); // Rotation de 90 degrés autour de l'axe x
 	glBegin(GL_TRIANGLE_FAN);
-		glVertex3f(0.0,0.0,0.0);
-		float step_rad = 2*M_PI/(float)NB_SEG_CIRCLE;
-		for(int i=0;i<=NB_SEG_CIRCLE;i++) {
-			glVertex3f(cos(i*step_rad),sin(i*step_rad),0.0f);
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		float step_rad = 2 * M_PI / (float)NB_SEG_CIRCLE;
+		for (int i = 0; i <= NB_SEG_CIRCLE; i++) {
+			glVertex3f(cos(i * step_rad), sin(i * step_rad), 0.0f);
 		}
 	glEnd();
+	glScalef(0.5,0.5,1.);
+	glPopMatrix();
 }
+
+
+
 
 void drawCone() {
 	glBegin(GL_TRIANGLE_FAN);
