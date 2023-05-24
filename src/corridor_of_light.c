@@ -139,24 +139,9 @@ int main(int argc, char** argv)
 		// drawFrame();
 
 		/* Scene rendering */
-		
-
-		
-
 		drawCorridor();
+		drawCircle();
 		
-		/* Sphère 
-		glPushMatrix();	
-			Première Méthode 
-				glTranslatef(4.*cos(toRad(angle)),4*sin(toRad(angle)),5.0);
-				drawSphere();
-			Seconde Methode
-				glTranslatef(4.,0.,0.);
-				glRotatef(angle,0.,0.,1.);
-				glTranslatef(0.,0.,5.);
-				drawSphere();	
-		glPopMatrix(); */
-
 		
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
