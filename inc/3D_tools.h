@@ -24,6 +24,8 @@ void drawSquare(float r,float g,float b);
 
 void drawCircle();
 
+void drawCarre(float translate_x, float translate_y);
+
 void drawCone();
 
 void drawSphere();

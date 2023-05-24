@@ -18,7 +18,6 @@ float toRad(float deg) {
 	return deg*M_PI/180.0f;
 }
 
-
 void drawSquare(float r,float g,float b) {
 	glBegin(GL_TRIANGLE_FAN);
 		glColor3f(r,g,b);
@@ -29,7 +28,11 @@ void drawSquare(float r,float g,float b) {
 	glEnd();
 }
 
-void drawCarre() {
+
+void drawCarre(float translate_x, float translate_y) {
+    glPushMatrix();
+    glTranslatef(translate_x, translate_y, 0.0f);
+
     glBegin(GL_LINE_LOOP);
     //glColor3f(r, g, b);
     glVertex3f(-0.5, -0.5, 0.0);
@@ -37,7 +40,9 @@ void drawCarre() {
     glVertex3f(0.5, 0.5, 0.0);
     glVertex3f(-0.5, 0.5, 0.0);
     glEnd();
+    glPopMatrix();
 }
+
 
 void drawCircle() {
 	glMatrixMode(GL_MODELVIEW);
