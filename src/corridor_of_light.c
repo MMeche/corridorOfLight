@@ -144,7 +144,7 @@ int main(int argc, char** argv)
 		setCamera();
 		
 
-		/* Initial scenery setup */
+		/* Initial scenery  setup */
 		
 		drawFrame();
 

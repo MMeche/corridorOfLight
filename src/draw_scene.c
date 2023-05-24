@@ -2,7 +2,7 @@
 #include "../inc/3D_tools.h"
 
 void drawSection(float r1,float g1,float b1,float r2,float g2, float b2){ 
-// Une section est un coin du couloir, les paramètres déterminent la couleur des deux carrés composants le coin
+// Une section est un coin du couloir, le s paramètres déterminent la couleur des deux carrés composants le coin
     glPushMatrix();
     
     glTranslatef(0.,-4.5,2.);
