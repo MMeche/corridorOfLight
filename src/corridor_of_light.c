@@ -27,6 +27,7 @@ float speed = 0.3f;
 double angle = 0; // en degré
 double angle_scale = 0;
 
+
 /*Menu Handlers*/
 static int running = 0;
 static int rules = 0;
@@ -37,18 +38,18 @@ static int menu = 1;
 /* Error handling function */
 void onError(int error, const char* description)
 {
-	fprintf(stderr, "GLFW Error: %s\n", description);
+    fprintf(stderr, "GLFW Error: %s\n", description);
 }
 
 void onWindowResized(GLFWwindow* window, int width, int height)
 {
-	aspectRatio = width / (float) height;
+    aspectRatio = width / (float) height;
 
-	glViewport(0, 0, width, height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60.0,aspectRatio,Z_NEAR,Z_FAR);
-	glMatrixMode(GL_MODELVIEW);
+    glViewport(0, 0, width, height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(60.0, aspectRatio, 0.1, 100.0);
+    glMatrixMode(GL_MODELVIEW);
 }
 
 void onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -85,7 +86,7 @@ void onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
 				break;
 			case GLFW_KEY_T :
 				flag_animate_rot_scale = 1-flag_animate_rot_scale;
-				break;
+				break;drawFrame();
 				if(dist_zoom>1.0f) dist_zoom*=0.9;
 				printf("Zoom is %f\n",dist_zoom);
 				break;
@@ -108,6 +109,18 @@ void onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
 			default: fprintf(stdout,"Touche non gérée (%d)\n",key);
 		}
 	}
+}
+
+float translate_x = 0.0f;
+float translate_y = 0.0f;
+
+void onMouseMove(GLFWwindow* window, double xpos, double ypos)
+{
+    float normalizedX = (float)(xpos / WINDOW_WIDTH) * 2 - 1;
+    float normalizedY = (float)((WINDOW_HEIGHT - ypos) / WINDOW_HEIGHT) * 2 - 1;
+
+    translate_x = normalizedX; // Diviser par une constante pour ajuster l'échelle de la translation
+    translate_y = normalizedY;
 }
 
 void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
@@ -150,58 +163,50 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 
 int main(int argc, char** argv)
 {
-	drawFrame();
-	/* GLFW initialisation */
-	GLFWwindow* window;
-	if (!glfwInit()) return -1;
+    /* GLFW initialization */
 
-	/* Callback to a function if an error is rised by GLFW */
-	glfwSetErrorCallback(onError);
+    GLFWwindow* window;
+    if (!glfwInit()) return -1;
 
-	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, NULL, NULL);
-	if (!window)
-	{
-		// If no context created : exit !
-		glfwTerminate();
-		return -1;
-	}
+    /* Callback for GLFW errors */
+    glfwSetErrorCallback(onError);
 
-	/* Make the window's context current */
-	glfwMakeContextCurrent(window);
+    /* Create a windowed mode window and its OpenGL context */
+    window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, NULL, NULL);
+    if (!window) {
+        glfwTerminate();
+        return -1;
+    }
+
+    /* Make the window's context current */
+    glfwMakeContextCurrent(window);
+    glfwSetCursorPosCallback(window, onMouseMove);
 
 	glfwSetWindowSizeCallback(window,onWindowResized);
 	glfwSetKeyCallback(window, onKey);
+	glfwSetCursorPosCallback(window, onMouseMove);
 	glfwSetMouseButtonCallback(window,mouse_button_callback);
 
-	onWindowResized(window,WINDOW_WIDTH,WINDOW_HEIGHT);
+    onWindowResized(window, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-	glPointSize(5.0);
-	glEnable(GL_DEPTH_TEST);
+    glPointSize(5.0);
+    glEnable(GL_DEPTH_TEST);
 
-	/* Loop until the user closes the window */
-	while (!glfwWindowShouldClose(window))
-	{
-		/* Get time (in second) at loop beginning */
-		double startTime = glfwGetTime();
+    while (!glfwWindowShouldClose(window)) {
+        double startTime = glfwGetTime();
 
-		/* Cleaning buffers and setting Matrix Mode */
-		glClearColor(0.2,0.0,0.0,0.0);
+        glClearColor(0.2, 0.0, 0.0, 0.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
 		setCamera();
-		
 
-		/* Initial scenery  setup */
-		
-		drawFrame();
+        /* Initial scenery setup */
+        drawFrame();
 
 		/* Scene rendering */
 		
-
 		if(running == 1)
 		{
 			drawCorridor();
@@ -222,6 +227,11 @@ int main(int argc, char** argv)
 				//on remet le compteur de score à zéro, et on redonne toute ses vies au joueur.
 				new_game = 0;
 			}
+			glPushMatrix();
+            glColor3f(1., 0.5, 0.);
+            glRotatef(90., 1., 0., 0.);
+            drawCarre(translate_x, translate_y);
+            glPopMatrix();
 			
 			//ballz();
 			//drawHUD();
@@ -240,27 +250,15 @@ int main(int argc, char** argv)
 			return 0;
 		}
 
+        glfwSwapBuffers(window);
+        glfwPollEvents();
 
-		
-		/* Swap front and back buffers */
-		glfwSwapBuffers(window);
+        double elapsedTime = glfwGetTime() - startTime;
+        if (elapsedTime < FRAMERATE_IN_SECONDS) {
+            glfwWaitEventsTimeout(FRAMERATE_IN_SECONDS - elapsedTime);
+        }
+    }
 
-		/* Poll for and process events */
-		glfwPollEvents();
-		angle += 20 ;
-		angle_scale += 5;
-
-		/* Elapsed time computation from loop begining */
-		double elapsedTime = glfwGetTime() - startTime;
-		/* If to few time is spend vs our wanted FPS, we wait */
-		if(elapsedTime < FRAMERATE_IN_SECONDS)
-		{
-			glfwWaitEventsTimeout(FRAMERATE_IN_SECONDS-elapsedTime);
-		}
-
-		/* Animate scenery */
-	}
-
-	glfwTerminate();
-	return 0;
+    glfwTerminate();
+    return 0;
 }
