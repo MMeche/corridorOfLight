@@ -210,7 +210,13 @@ int main(int argc, char** argv)
 		
 		if(running == 1)
 		{
-			drawCorridor();
+			glPushMatrix();
+				glTranslatef(0.,-30.,0.);	
+				glRotatef(90.,1.,0.,0.);
+				glScalef(45.,45.,0.);			
+				drawSquare(0.,0.,0.);
+			glPopMatrix();
+				drawCorridor();
 			glPushMatrix();
 				glRotatef(180.,0.,1.,0.);
 				drawCorridor();
