@@ -12,7 +12,7 @@
 /* Window properties */
 static const unsigned int WINDOW_WIDTH = 1000;
 static const unsigned int WINDOW_HEIGHT = 1000;
-static const char WINDOW_TITLE[] = "TD04 Ex01";
+static const char WINDOW_TITLE[] = "Corridor";
 static float aspectRatio = 1.0;
 
 /* Minimal time wanted between two images */
@@ -23,14 +23,16 @@ static int flag_animate_rot_scale = 0;
 static int flag_animate_rot_arm = 0;
 
 /* Variable */
+float speed = 0.3f;
 double angle = 0; // en degré
 double angle_scale = 0;
 
 /*Menu Handlers*/
-static int started = 1;
+static int running = 0;
 static int rules = 0;
+static int new_game = 0;
 static int quit = 0;
-static int menu = 0;
+static int menu = 1;
 
 /* Error handling function */
 void onError(int error, const char* description)
@@ -54,8 +56,23 @@ void onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
 	if (action == GLFW_PRESS) {
 		switch(key) {
 			case GLFW_KEY_A :
-			case GLFW_KEY_ESCAPE :
 				glfwSetWindowShouldClose(window, GLFW_TRUE);
+				break;
+			case GLFW_KEY_ESCAPE :
+				if(running==1 && menu==0)
+				{
+					menu = 1;
+					speed = 0;
+					printf("Menu %i\n",menu);
+				}
+				else{
+					if(running==1 && menu == 1)
+					{
+						menu = 0;
+						speed = 0.3f;
+						printf("Menu %i\n",menu);
+					};
+				};
 				break;
 			case GLFW_KEY_L :
 				glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
@@ -68,7 +85,7 @@ void onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
 				break;
 			case GLFW_KEY_T :
 				flag_animate_rot_scale = 1-flag_animate_rot_scale;
-				break;drawFrame();
+				break;
 				if(dist_zoom>1.0f) dist_zoom*=0.9;
 				printf("Zoom is %f\n",dist_zoom);
 				break;
@@ -93,13 +110,47 @@ void onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
 	}
 }
 
-void onClick(GLFWwindow* window,int mouseButton, int scancode, int action, int mods)
+void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 {
+	if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
+		double x,y;
+		glfwGetCursorPos(window,&x,&y);
+		if(menu == 1 && x >= 300 && x<= 720)
+		{
+			if(y>=330 && y<=370)
+			{
+				//Nouvelle Partie
+				menu = 0;
+				new_game = 1;
+				running = 1;
+			}
+			if(y>=426 && y<=460)
+			{
+				//Règles
+				menu = 0;
+				rules = 1;
+			}
+			if(y>=520 && y<=560 && running == 1)
+			{
+				//Resume
+				menu = 0 ;
+				running = 1;
+			}
+			if(y>=615 && y<=655)
+			{
+				//Quitter
+				menu = 0;
+				quit = 1;
+			}
+		}
 
+	}
+	return;
 };
 
 int main(int argc, char** argv)
-{drawFrame();
+{
+	drawFrame();
 	/* GLFW initialisation */
 	GLFWwindow* window;
 	if (!glfwInit()) return -1;
@@ -121,7 +172,7 @@ int main(int argc, char** argv)
 
 	glfwSetWindowSizeCallback(window,onWindowResized);
 	glfwSetKeyCallback(window, onKey);
-	/*glfwSetMouseButtonCallback(window,onClick);*/
+	glfwSetMouseButtonCallback(window,mouse_button_callback);
 
 	onWindowResized(window,WINDOW_WIDTH,WINDOW_HEIGHT);
 
@@ -151,27 +202,42 @@ int main(int argc, char** argv)
 		/* Scene rendering */
 		
 
-		if(started == 1)
+		if(running == 1)
 		{
 			drawCorridor();
 			glPushMatrix();
 				glRotatef(180.,0.,1.,0.);
 				drawCorridor();
 			glPopMatrix();
-			glTranslatef(0.,-2.5,-1.2);
-			glScalef(0.5, 0.5, 0.5);
-			drawCircle();
+			glPushMatrix();
+				glTranslatef(0.,-2.5,-1.2);
+				glScalef(0.5, 0.5, 0.5);
+				drawCircle();
+			glPopMatrix();
+			//Pour gérer les parties : il va y avoir une liste d'obstacles (nombre fixe, générés aléatoirement ou non).
+			//Une fois que tous les obstacles sont passés, la partie se termine. 
+			if(new_game == 1)
+			{
+				//si c'est une nouvelle parie on recharge dans la liste une nouvelle serie d'obstacle,
+				//on remet le compteur de score à zéro, et on redonne toute ses vies au joueur.
+				new_game = 0;
+			}
 			
 			//ballz();
 			//drawHUD();
 		}
 		if(menu==1)
 		{
-			//drawMenu();
-		}
+			drawMenu();
+		};
 		if(rules==1)
 		{
 
+		};
+		if(quit==1)
+		{
+			glfwSetWindowShouldClose(window, GLFW_TRUE);
+			return 0;
 		}
 
 

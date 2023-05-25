@@ -2,7 +2,7 @@
 #include "../inc/3D_tools.h"
 
 void drawSection(float r1,float g1,float b1,float r2,float g2, float b2){ 
-// Une section est un coin du couloir, le s paramètres déterminent la couleur des deux carrés composants le coin
+// Une section est un coin du couloir, les paramètres déterminent la couleur des deux carrés composants le coin
     glPushMatrix();
     
     glTranslatef(0.,-4.5,2.);
@@ -51,6 +51,38 @@ void drawCorridor()
     glPopMatrix();
 
 }
+
+void drawMenu()
+{
+	glPushMatrix();
+        glRotatef(90.,1.,0.,0.);
+        glScalef(5.33f,2.75f,0.);
+        drawSquare(0.,0.,0.);
+    glPopMatrix();
+    glPushMatrix();
+        glRotatef(90.f,1.f,0.,0.);
+        glPushMatrix();
+            glTranslatef(0.,0.75,-0.5);
+            glScalef(2.,0.2,0.);
+            drawSquare(1.,1.,1.);
+        glPopMatrix();
+        glPushMatrix();
+            glTranslatef(0.,0.25,-0.5);
+            glScalef(2.,0.2,0.);
+            drawSquare(1.,1.,1.);
+        glPopMatrix();
+        glPushMatrix();
+            glTranslatef(0.,-0.25,-0.5);
+            glScalef(2.,0.2,0.);
+            drawSquare(1.,1.,1.);
+        glPopMatrix();
+        glPushMatrix();
+            glTranslatef(0.,-0.75,-0.5);
+            glScalef(2.,0.2,0.);
+            drawSquare(1.,1.,1.);
+        glPopMatrix();
+    glPopMatrix();
+};
 
 void drawBase() 
 {
