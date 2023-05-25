@@ -1,5 +1,6 @@
 #include "../inc/draw_scene.h"
 #include "../inc/3D_tools.h"
+#include "../inc/structures.h"
 
 void drawSection(float r1,float g1,float b1,float r2,float g2, float b2){ 
 // Une section est un coin du couloir, les paramètres déterminent la couleur des deux carrés composants le coin
@@ -50,6 +51,31 @@ void drawCorridor()
 	    glPopMatrix();
     glPopMatrix();
 
+}
+
+void drawLineSpeed()
+{
+    for(int i = 0; i<5 ; i++ )
+    {
+    glBegin(GL_LINES);
+        glPushMatrix();
+            glColor3f(1.,1.,1.);
+            
+                glVertex3f(line_speed[i].cid.x,line_speed[i].cid.y,line_speed[i].cid.z);
+                glVertex3f(line_speed[i].cig.x,line_speed[i].cig.y,line_speed[i].cig.z);
+
+                glVertex3f(line_speed[i].cig.x,line_speed[i].cig.y,line_speed[i].cig.z);
+                glVertex3f(line_speed[i].csg.x,line_speed[i].csg.y,line_speed[i].csg.z);
+
+                glVertex3f(line_speed[i].csg.x,line_speed[i].csg.y,line_speed[i].csg.z);
+                glVertex3f(line_speed[i].csd.x,line_speed[i].csd.y,line_speed[i].csd.z);
+
+                glVertex3f(line_speed[i].csd.x,line_speed[i].csd.y,line_speed[i].csd.z);
+                glVertex3f(line_speed[i].cid.x,line_speed[i].cid.y,line_speed[i].cid.z);
+            
+        glPopMatrix();
+    glEnd();
+    }
 }
 
 void drawMenu()

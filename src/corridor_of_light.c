@@ -7,6 +7,7 @@
 #include <math.h>
 #include "../inc/3D_tools.h"
 #include "../inc/draw_scene.h"
+#include "../inc/structures.h"
 
 
 /* Window properties */
@@ -24,8 +25,7 @@ static int flag_animate_rot_arm = 0;
 
 /* Variable */
 float speed = 0.3f;
-double angle = 0; // en degré
-double angle_scale = 0;
+
 
 
 /*Menu Handlers*/
@@ -192,6 +192,9 @@ int main(int argc, char** argv)
 
     glPointSize(5.0);
     glEnable(GL_DEPTH_TEST);
+	printf("hmmm \n");
+	init_structures(line_speed);
+	printf("yeah \n");
 
     while (!glfwWindowShouldClose(window)) {
         double startTime = glfwGetTime();
@@ -211,9 +214,9 @@ int main(int argc, char** argv)
 		if(running == 1)
 		{
 			glPushMatrix();
-				glTranslatef(0.,-30.,0.);	
+				glTranslatef(0.,-40.,0.);	
 				glRotatef(90.,1.,0.,0.);
-				glScalef(45.,45.,0.);			
+				glScalef(60.,60.,0.);			
 				drawSquare(0.,0.,0.);
 			glPopMatrix();
 				drawCorridor();
@@ -226,6 +229,7 @@ int main(int argc, char** argv)
 				glScalef(0.5, 0.5, 0.5);
 				drawCircle();
 			glPopMatrix();
+			drawLineSpeed();
 			//Pour gérer les parties : il va y avoir une liste d'obstacles (nombre fixe, générés aléatoirement ou non).
 			//Une fois que tous les obstacles sont passés, la partie se termine. 
 			if(new_game == 1)
