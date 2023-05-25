@@ -116,11 +116,14 @@ float translate_y = 0.0f;
 
 void onMouseMove(GLFWwindow* window, double xpos, double ypos)
 {
-    float normalizedX = (float)((xpos/(WINDOW_WIDTH/2) - 1)) * aspectRatio;
-    float normalizedY = (float)((ypos/(WINDOW_HEIGHT/2) - 1)) * aspectRatio;
-
-    translate_x = -normalizedX; // Diviser par une constante pour ajuster l'échelle de la translation
-    translate_y = -normalizedY;
+	// Diviser par une constante pour ajuster l'échelle de la translation
+    float normalizedX = (float)((xpos/(WINDOW_WIDTH/(8)) - 4));
+    float normalizedY = (float)((ypos/(WINDOW_HEIGHT/(8)) - 4));
+	if(abs(normalizedX)<3.7 && abs(normalizedY)<1.9)
+	{
+		translate_x = -normalizedX;
+		translate_y = -normalizedY;
+	}
 }
 
 void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
@@ -225,12 +228,15 @@ int main(int argc, char** argv)
 				//on remet le compteur de score à zéro, et on redonne toute ses vies au joueur.
 				new_game = 0;
 			}
-			glPushMatrix();
-            glColor3f(1., 0.5, 0.);
-            glRotatef(90., 1., 0., 0.);
-            drawCarre(translate_x, translate_y);
-            glPopMatrix();
-			
+			if(menu == 0)
+			{
+				glPushMatrix();
+				glColor3f(1., 0.5, 0.);
+				glTranslatef(0.,-2.,0.);
+				glRotatef(90., 1., 0., 0.);
+				drawCarre(translate_x, translate_y);
+				glPopMatrix();
+			}
 			//ballz();
 			//drawHUD();
 		}
