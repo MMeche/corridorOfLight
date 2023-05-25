@@ -116,11 +116,11 @@ float translate_y = 0.0f;
 
 void onMouseMove(GLFWwindow* window, double xpos, double ypos)
 {
-    float normalizedX = (float)(xpos / WINDOW_WIDTH) * 2 - 1;
-    float normalizedY = (float)((WINDOW_HEIGHT - ypos) / WINDOW_HEIGHT) * 2 - 1;
+    float normalizedX = (float)((xpos/(WINDOW_WIDTH/2) - 1)) * aspectRatio;
+    float normalizedY = (float)((ypos/(WINDOW_HEIGHT/2) - 1)) * aspectRatio;
 
-    translate_x = normalizedX; // Diviser par une constante pour ajuster l'échelle de la translation
-    translate_y = normalizedY;
+    translate_x = -normalizedX; // Diviser par une constante pour ajuster l'échelle de la translation
+    translate_y = -normalizedY;
 }
 
 void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
@@ -156,9 +156,7 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 				quit = 1;
 			}
 		}
-
 	}
-	return;
 };
 
 int main(int argc, char** argv)
