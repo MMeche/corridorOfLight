@@ -123,6 +123,7 @@ void onMouseMove(GLFWwindow* window, double xpos, double ypos)
 	{
 		translate_x = -normalizedX;
 		translate_y = -normalizedY;
+
 	}
 }
 
@@ -245,12 +246,7 @@ int main(int argc, char** argv)
 			}
 			if(menu == 0)
 			{
-				glPushMatrix();
-				glColor3f(1., 0.5, 0.);
-				glTranslatef(0.,-2.5,0.);
-				glRotatef(90., 1., 0., 0.);
 				drawRaquette(translate_x, translate_y);
-				glPopMatrix();
 				if(state_right==GLFW_PRESS)
 				{
 					avance_joueur(line_speed);

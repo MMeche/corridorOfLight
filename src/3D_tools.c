@@ -29,18 +29,19 @@ void drawSquare(float r,float g,float b) {
 }
 
 
-void drawCarre(float translate_x, float translate_y) {
-    glPushMatrix();
-    glTranslatef(translate_x, translate_y, 0.0f);
-
-    glBegin(GL_LINE_LOOP);
-    //glColor3f(r, g, b);
-    glVertex3f(-0.5, -0.5, 0.0);
-    glVertex3f(0.5, -0.5, 0.0);
-    glVertex3f(0.5, 0.5, 0.0);
-    glVertex3f(-0.5, 0.5, 0.0);
-    glEnd();
-    glPopMatrix();
+void drawRaquette(float x, float y) {
+	glPushMatrix();
+		glColor3f(1., 0.5, 0.);
+		glTranslatef(x, -2.5, y);
+		glRotatef(90., 1., 0., 0.);
+		glBegin(GL_LINE_LOOP);
+			glVertex3f(-0.5, -0.5, 0.0);
+			glVertex3f(0.5, -0.5, 0.0);
+			glVertex3f(0.5, 0.5, 0.0);
+			glVertex3f(-0.5, 0.5, 0.0);
+		glEnd();
+	glPopMatrix();
+	
 }
 
 
