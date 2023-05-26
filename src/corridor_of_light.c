@@ -8,6 +8,7 @@
 #include "../inc/3D_tools.h"
 #include "../inc/draw_scene.h"
 #include "../inc/structures.h"
+#include "../inc/interactions.h"
 
 
 /* Window properties */
@@ -24,7 +25,7 @@ static int flag_animate_rot_scale = 0;
 static int flag_animate_rot_arm = 0;
 
 /* Variable */
-float speed = 0.3f;
+
 
 
 
@@ -44,8 +45,6 @@ void onError(int error, const char* description)
 void onWindowResized(GLFWwindow* window, int width, int height)
 {
     aspectRatio = width / (float) height;
-	WINDOW_WIDTH = width;
-	WINDOW_HEIGHT = height;
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -120,7 +119,7 @@ void onMouseMove(GLFWwindow* window, double xpos, double ypos)
 	// Diviser par une constante pour ajuster l'échelle de la translation
     float normalizedX = (float)((xpos/(WINDOW_WIDTH/(8)) - 4));
     float normalizedY = (float)((ypos/(WINDOW_HEIGHT/(8)) - 4));
-	if(abs(normalizedX)<3.7 && abs(normalizedY)<1.9)
+	if((normalizedX<3.5 && normalizedY<1.5) && (normalizedX>-3.5 && normalizedY>-1.5))
 	{
 		translate_x = -normalizedX;
 		translate_y = -normalizedY;
@@ -134,6 +133,7 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 		glfwGetCursorPos(window,&x,&y);
 		printf("x %f\n",x);
 		printf("y %f\n",y);
+		//Action pour le menu
 		if(menu == 1 && x >= (WINDOW_WIDTH/2)-190 && x<= (WINDOW_WIDTH/2)+190)
 		{
 			if(y>=(WINDOW_HEIGHT/2)-(28.5+80+57) && y<=(WINDOW_HEIGHT/2) - (28.5+40+57))
@@ -162,7 +162,17 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 				quit = 1;
 			}
 		}
+		//Action pour envoyer la balle
+		if(running==1 && (menu==0 && rules==0))
+		{
+
+		};
 	}
+	//Action "avancer" la raquette
+	if(button==GLFW_MOUSE_BUTTON_RIGHT && GLFW_PRESS)
+	{
+		state_right = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT);
+	};
 };
 
 int main(int argc, char** argv)
@@ -245,10 +255,14 @@ int main(int argc, char** argv)
 			{
 				glPushMatrix();
 				glColor3f(1., 0.5, 0.);
-				glTranslatef(0.,-2.,0.);
+				glTranslatef(0.,-2.5,0.);
 				glRotatef(90., 1., 0., 0.);
 				drawCarre(translate_x, translate_y);
 				glPopMatrix();
+				if(state_right==GLFW_PRESS)
+				{
+					avance_joueur(line_speed);
+				}
 			}
 			//ballz();
 			//drawHUD();

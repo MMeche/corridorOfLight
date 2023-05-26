@@ -55,7 +55,7 @@ void drawCorridor()
 
 void drawLineSpeed()
 {
-    for(int i = 0; i<5 ; i++ )
+    for(int i = 0; i<4 ; i++ )
     {
     glBegin(GL_LINES);
         glPushMatrix();
