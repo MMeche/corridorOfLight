@@ -205,9 +205,9 @@ int main(int argc, char** argv)
 
     glPointSize(5.0);
     glEnable(GL_DEPTH_TEST);
-	printf("hmmm \n");
+	
 	init_structures(line_speed);
-	printf("yeah \n");
+	
 
     while (!glfwWindowShouldClose(window)) {
         double startTime = glfwGetTime();
@@ -232,16 +232,8 @@ int main(int argc, char** argv)
 				glScalef(60.,60.,0.);			
 				drawSquare(0.,0.,0.);
 			glPopMatrix();
-				drawCorridor();
-			glPushMatrix();
-				glRotatef(180.,0.,1.,0.);
-				drawCorridor();
-			glPopMatrix();
-			glPushMatrix();
-				glTranslatef(0.,-2.5,-1.2);
-				glScalef(0.5, 0.5, 0.5);
-				drawCircle();
-			glPopMatrix();
+
+			drawCorridor();	
 			drawLineSpeed();
 			//Pour gérer les parties : il va y avoir une liste d'obstacles (nombre fixe, générés aléatoirement ou non).
 			//Une fois que tous les obstacles sont passés, la partie se termine. 
@@ -257,7 +249,7 @@ int main(int argc, char** argv)
 				glColor3f(1., 0.5, 0.);
 				glTranslatef(0.,-2.5,0.);
 				glRotatef(90., 1., 0., 0.);
-				drawCarre(translate_x, translate_y);
+				drawRaquette(translate_x, translate_y);
 				glPopMatrix();
 				if(state_right==GLFW_PRESS)
 				{
