@@ -129,9 +129,10 @@ void onMouseMove(GLFWwindow* window, double xpos, double ypos)
 
 void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 {
+	double x,y;
+	glfwGetCursorPos(window,&x,&y);
 	if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
-		double x,y;
-		glfwGetCursorPos(window,&x,&y);
+		
 		printf("x %f\n",x);
 		printf("y %f\n",y);
 		//Action pour le menu
@@ -168,11 +169,20 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 		{
 
 		};
-	}
+	};
 	//Action "avancer" la raquette
 	if(button==GLFW_MOUSE_BUTTON_RIGHT && GLFW_PRESS)
 	{
-		state_right = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT);
+		float normX = (float)((x/(WINDOW_WIDTH/(8)) - 4));
+    	float normY = (float)((y/(WINDOW_HEIGHT/(8)) - 4));
+		if((normX<3.5 && normY<1.5) && (normX>-3.5 && normY>-1.5))
+		{
+			state_right = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT);
+		}
+		else
+		{
+			state_right = 0;
+		}
 	};
 };
 
@@ -255,14 +265,20 @@ int main(int argc, char** argv)
 			//ballz();
 			//drawHUD();
 		}
+
+
 		if(menu==1)
 		{
 			drawMenu();
 		};
+
+
 		if(rules==1)
 		{
 
 		};
+
+
 		if(quit==1)
 		{
 			glfwSetWindowShouldClose(window, GLFW_TRUE);
