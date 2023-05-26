@@ -44,7 +44,8 @@ void onError(int error, const char* description)
 void onWindowResized(GLFWwindow* window, int width, int height)
 {
     aspectRatio = width / (float) height;
-
+	WINDOW_WIDTH = width;
+	WINDOW_HEIGHT = height;
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -60,7 +61,7 @@ void onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
 				glfwSetWindowShouldClose(window, GLFW_TRUE);
 				break;
 			case GLFW_KEY_ESCAPE :
-				if(running==1 && menu==0)
+				if((running==1|rules==1) && menu==0)
 				{
 					menu = 1;
 					speed = 0;
@@ -131,28 +132,30 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 	if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
 		double x,y;
 		glfwGetCursorPos(window,&x,&y);
-		if(menu == 1 && x >= 300 && x<= 720)
+		printf("x %f\n",x);
+		printf("y %f\n",y);
+		if(menu == 1 && x >= (WINDOW_WIDTH/2)-190 && x<= (WINDOW_WIDTH/2)+190)
 		{
-			if(y>=330 && y<=370)
+			if(y>=(WINDOW_HEIGHT/2)-(28.5+80+57) && y<=(WINDOW_HEIGHT/2) - (28.5+40+57))
 			{
 				//Nouvelle Partie
 				menu = 0;
 				new_game = 1;
 				running = 1;
 			}
-			if(y>=426 && y<=460)
+			if(y>=(WINDOW_HEIGHT/2)-(28.5+40) && y<=(WINDOW_HEIGHT/2)-(28.5))
 			{
 				//Règles
 				menu = 0;
 				rules = 1;
 			}
-			if(y>=520 && y<=560 && running == 1)
+			if(y>=(WINDOW_HEIGHT/2)+28.5 && y<=(WINDOW_HEIGHT/2)+(28.5+40) && running == 1)
 			{
 				//Resume
 				menu = 0 ;
 				running = 1;
 			}
-			if(y>=615 && y<=655)
+			if(y>=(WINDOW_HEIGHT/2)+(28.5+40+57) && y<=(WINDOW_HEIGHT/2)+(28.5+80+57))
 			{
 				//Quitter
 				menu = 0;
