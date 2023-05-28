@@ -19,7 +19,10 @@ struct Rect
     struct Rect* next;
 };
 extern struct Rect line_speed[4];
+extern struct Rect obstacle_list[1];
 
-void init_structures(struct Rect* line_speed);
+extern struct Rect o1;
+
+void init_structures(struct Rect* line_speed, struct Rect* obstacle_list);
 
 #endif

@@ -6,12 +6,11 @@
 #include <stdio.h>
 #include <math.h>
 
+
 void drawFrame();
 
-void drawBase();
-
-void drawArm();
-
-void drawPan();
-
 void drawCorridor();
+
+void drawLineSpeed();
+
+void drawObstacles();

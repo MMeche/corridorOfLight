@@ -88,23 +88,44 @@ void drawLineSpeed()
     glBegin(GL_LINES);
         glPushMatrix();
             glColor3f(1.,1.,1.);
-            
-                glVertex3f(line_speed[i].cid.x,line_speed[i].cid.y,line_speed[i].cid.z);
-                glVertex3f(line_speed[i].cig.x,line_speed[i].cig.y,line_speed[i].cig.z);
+        
+            glVertex3f(line_speed[i].cid.x,line_speed[i].cid.y,line_speed[i].cid.z);
+            glVertex3f(line_speed[i].cig.x,line_speed[i].cig.y,line_speed[i].cig.z);
+            glVertex3f(line_speed[i].cig.x,line_speed[i].cig.y,line_speed[i].cig.z);
+            glVertex3f(line_speed[i].csg.x,line_speed[i].csg.y,line_speed[i].csg.z);
+            glVertex3f(line_speed[i].csg.x,line_speed[i].csg.y,line_speed[i].csg.z);
+            glVertex3f(line_speed[i].csd.x,line_speed[i].csd.y,line_speed[i].csd.z);
+            glVertex3f(line_speed[i].csd.x,line_speed[i].csd.y,line_speed[i].csd.z);
+            glVertex3f(line_speed[i].cid.x,line_speed[i].cid.y,line_speed[i].cid.z);     
 
-                glVertex3f(line_speed[i].cig.x,line_speed[i].cig.y,line_speed[i].cig.z);
-                glVertex3f(line_speed[i].csg.x,line_speed[i].csg.y,line_speed[i].csg.z);
-
-                glVertex3f(line_speed[i].csg.x,line_speed[i].csg.y,line_speed[i].csg.z);
-                glVertex3f(line_speed[i].csd.x,line_speed[i].csd.y,line_speed[i].csd.z);
-
-                glVertex3f(line_speed[i].csd.x,line_speed[i].csd.y,line_speed[i].csd.z);
-                glVertex3f(line_speed[i].cid.x,line_speed[i].cid.y,line_speed[i].cid.z);
-            
         glPopMatrix();
     glEnd();
     }
 }
+
+void drawObstacles()
+{
+    
+   
+    for(int i=0;i<((&obstacle_list)[1] - obstacle_list);i++)
+    {
+        if(obstacle_list[i].cid.y<-2.5)
+        {
+                glPushMatrix();
+                    glColor3f(0.329,0.250,0.49);
+                        glBegin(GL_TRIANGLE_FAN);
+                        glVertex3f(obstacle_list[i].cid.x,obstacle_list[i].cid.y,obstacle_list[i].cid.z);
+                        glVertex3f(obstacle_list[i].cig.x,obstacle_list[i].cid.y,obstacle_list[i].cig.z);
+                        glVertex3f(obstacle_list[i].csg.x,obstacle_list[i].csg.y,obstacle_list[i].csg.z);
+                        glVertex3f(obstacle_list[i].csd.x,obstacle_list[i].csd.y,obstacle_list[i].csd.z);
+		                glEnd();
+                glPopMatrix();  
+        };
+    };
+    
+
+
+};
 
 void drawMenu()
 {
@@ -137,65 +158,6 @@ void drawMenu()
         glPopMatrix();
     glPopMatrix();
 };
-
-void drawBase() 
-{
-    glPushMatrix();
-        glScalef(3.,3.,0.);
-        drawCircle();
-    glPopMatrix();
-    glPushMatrix();
-        glScalef(2.,2.,10.);
-        drawCone();
-    glPopMatrix();
-}
-
-void drawArm() 
-{
-    glColor3f(0.95,0.65,0.21);
-    glPushMatrix();
-        glScalef(1.6,1.6,1.6);
-        drawSphere();
-    glPopMatrix();
-
-    
-    glPushMatrix();
-        glScalef(10.,1.,1.);
-        glRotatef(90,0.,1.,0.);
-        drawCone();
-    glPopMatrix();
-    glPushMatrix();
-        glScalef(10.,1.,1.);
-        glRotatef(-90,0.,1.,0.);
-        drawCone();
-    glPopMatrix();
-
-
-
-}
-
-void drawPan() 
-{
-    glColor3f(0.,1.,1.);
-    glPushMatrix();
-        glTranslatef(0.,0.,-5.);
-        glScalef(3.,3.,3.);
-        drawCircle();
-    glPopMatrix();
-    glColor3f(1.,0.,0.);
-    glBegin(GL_LINES);
-        glVertex3f(0.,0.,0.);
-        glVertex3f(cos(0)*3.,sin(0)*3.,-5.0);
-        
-        glVertex3f(0.,0.,0.);
-        glVertex3f(cos(toRad(120))*3.,sin(toRad(120))*3.,-5.0);
-
-        glVertex3f(0.,0.,0.);
-        glVertex3f(cos(toRad(240))*3.,sin(toRad(240))*3.,-5.0);
-    glEnd();
-
-    
-}
 
 void drawFrame() {
     glBegin(GL_LINES);

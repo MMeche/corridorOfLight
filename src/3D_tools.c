@@ -28,6 +28,19 @@ void drawSquare(float r,float g,float b) {
 	glEnd();
 }
 
+void drawWall(struct Rect wall, float r, float g, float b)
+{
+	glBegin(GL_TRIANGLE_FAN);
+		glColor3f(r,g,b);
+		glVertex3f(wall.cid.x,wall.cid.y,wall.cid.z);
+		glVertex3f(wall.cig.x,wall.cid.y,wall.cig.z);
+		glVertex3f(wall.csg.x,wall.csg.y,wall.csg.z);
+		glVertex3f(wall.csd.x,wall.csd.y,wall.csd.z);
+		
+
+	glEnd();
+};
+
 
 void drawRaquette(float x, float y) {
 	glPushMatrix();

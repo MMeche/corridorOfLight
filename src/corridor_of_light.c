@@ -32,7 +32,7 @@ static int flag_animate_rot_arm = 0;
 /*Menu Handlers*/
 static int running = 0;
 static int rules = 0;
-static int new_game = 0;
+static int new_game = 1;
 static int quit = 0;
 static int menu = 1;
 
@@ -144,6 +144,7 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 				menu = 0;
 				new_game = 1;
 				running = 1;
+				speed = 0.3f;
 			}
 			if(y>=(WINDOW_HEIGHT/2)-(28.5+40) && y<=(WINDOW_HEIGHT/2)-(28.5))
 			{
@@ -156,6 +157,7 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 				//Resume
 				menu = 0 ;
 				running = 1;
+				speed = 0.3f;
 			}
 			if(y>=(WINDOW_HEIGHT/2)+(28.5+40+57) && y<=(WINDOW_HEIGHT/2)+(28.5+80+57))
 			{
@@ -217,7 +219,7 @@ int main(int argc, char** argv)
     glPointSize(5.0);
     glEnable(GL_DEPTH_TEST);
 	
-	init_structures(line_speed);
+	
 	
 
     while (!glfwWindowShouldClose(window)) {
@@ -237,6 +239,14 @@ int main(int argc, char** argv)
 		
 		if(running == 1)
 		{
+			if(new_game == 1)
+			{
+				init_structures(line_speed,obstacle_list);
+				//si c'est une nouvelle parie on recharge dans la liste une nouvelle serie d'obstacle,
+				//on remet le compteur de score à zéro, et on redonne toute ses vies au joueur.
+				new_game = 0;
+			}
+
 			glPushMatrix();
 				glTranslatef(0.,-40.,0.);	
 				glRotatef(90.,1.,0.,0.);
@@ -246,20 +256,17 @@ int main(int argc, char** argv)
 
 			drawCorridor();	
 			drawLineSpeed();
+			drawObstacles();
 			//Pour gérer les parties : il va y avoir une liste d'obstacles (nombre fixe, générés aléatoirement ou non).
 			//Une fois que tous les obstacles sont passés, la partie se termine. 
-			if(new_game == 1)
-			{
-				//si c'est une nouvelle parie on recharge dans la liste une nouvelle serie d'obstacle,
-				//on remet le compteur de score à zéro, et on redonne toute ses vies au joueur.
-				new_game = 0;
-			}
+			
 			if(menu == 0)
 			{
 				drawRaquette(translate_x, translate_y);
 				if(state_right==GLFW_PRESS)
 				{
-					avance_joueur(line_speed);
+					avance_joueur(line_speed,obstacle_list);
+					//avance_balle(balle);
 				}
 			}
 			//ballz();

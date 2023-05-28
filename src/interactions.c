@@ -3,7 +3,7 @@
 float speed = 0.3f;
 int state_right;
 
-void avance_joueur(struct Rect* line_speed)
+void avance_joueur(struct Rect* line_speed,struct Rect* obstacle_list)
 {
     for(int i=0;i<4;i++)
 	{
@@ -27,5 +27,13 @@ void avance_joueur(struct Rect* line_speed)
 		{
 			line_speed[i].csg.y-=16;
 		}
+	};
+	
+	for(int i=0;i<1;i++)
+	{
+		obstacle_list[i].cid.y += speed;
+		obstacle_list[i].csd.y += speed;
+		obstacle_list[i].cig.y += speed;
+		obstacle_list[i].csg.y += speed;
 	}
-};
+};	
