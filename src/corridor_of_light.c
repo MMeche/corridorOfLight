@@ -134,6 +134,7 @@ void onMouseMove(GLFWwindow* window, double xpos, double ypos)
 	}
 }
 
+
 void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 {
 	double x,y;
@@ -288,6 +289,15 @@ int main(int argc, char** argv)
 				glScalef(60.,60.,0.);			
 				drawSquare(0.,0.,0.);
 			glPopMatrix();
+			glPushMatrix();
+				score(1., 1., 0.);
+				glTranslatef(0.6, 0., 0.);
+				score(0., 1., 0.);
+				glTranslatef(0.6, 0., 0.);
+				score(0., 1., 0.);
+				glTranslatef(0.6, 0., 0.);
+				score(0., 1., 0.);
+			glPopMatrix();	
 
 			drawCorridor();	
 			drawLineSpeed();

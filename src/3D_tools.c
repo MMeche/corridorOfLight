@@ -28,6 +28,18 @@ void drawSquare(float r,float g,float b) {
 	glEnd();
 }
 
+void score() {
+	glBegin(GL_QUADS);
+		glColor3f(1., 0., 0.);
+		glVertex3f(-3.8, -2.1, -1.3);
+		glVertex3f(-3.8, -2.1, -1.9);
+		glVertex3f(-3.2, -2.1, -1.9);
+		glVertex3f(-3.2, -2.1, -1.3);
+	glEnd();
+}
+
+
+
 void drawWall(struct Rect wall, float r, float g, float b)
 {
 	glBegin(GL_TRIANGLE_FAN);

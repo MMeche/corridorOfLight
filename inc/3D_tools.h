@@ -31,6 +31,8 @@ void drawCone();
 
 void drawSphere();
 
+void score();
+
 void drawWall(struct Rect wall, float r, float g, float b);
 
 /* Small tools */
