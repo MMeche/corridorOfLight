@@ -53,6 +53,41 @@ void avance_balle(float* balle)
 		balle[6] = 0.f;
 	}
 	//Gestion des collisions
+	if(balle[5]<0) //cas où la balle va vers le fond
+	{
+		for(int i=0;i<1;i++)
+		{
+			if(balle[1]>obstacle_list[i].cid.y)
+			{
+				if((balle[0]+balle[4]+balle[3] >= obstacle_list[i].cid.x)&&(balle[0]+balle[4]-balle[3] <= obstacle_list[i].cig.x) // la balle est comprise 
+					&& (balle[2]+balle[6]+balle[3] >= obstacle_list[i].cid.z)&&(balle[2]+balle[6]-balle[3] <= obstacle_list[i].csd.z)
+					&& (balle[1]+balle[5]-balle[3] <= obstacle_list[i].cid.y))
+				{	
+					printf("oui");
+					balle[5] = -balle[5];
+				}		
+			}	
+		}
+	}else
+		{	
+			if(balle[5]>0) //cas où la balle va vers la raquette
+			{
+				for(int i=0;i<1;i++)
+				{
+					if(balle[1]<obstacle_list[i].cid.y)
+					{
+						if((balle[0]+balle[4]+balle[3] >= obstacle_list[i].cid.x)&&(balle[0]+balle[4]-balle[3] <= obstacle_list[i].cig.x) // la balle est comprise 
+							&& (balle[2]+balle[6]+balle[3] >= obstacle_list[i].cid.z)&&(balle[2]+balle[6]-balle[3] <= obstacle_list[i].csd.z)
+							&& (balle[1]+balle[5]+balle[3] >= obstacle_list[i].cid.y))
+						{
+							printf("non");
+							balle[5] = -balle[5];
+						};
+					}
+				};
+			};
+		};
+	
 	
 	
 	
