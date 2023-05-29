@@ -14,3 +14,5 @@ void drawCorridor();
 void drawLineSpeed();
 
 void drawObstacles();
+
+void drawBallz();

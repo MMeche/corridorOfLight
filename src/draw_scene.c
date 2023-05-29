@@ -127,6 +127,17 @@ void drawObstacles()
 
 };
 
+void drawBallz()
+{
+    glPushMatrix();
+        //glTranslatef(balle->centre.x,balle->centre.y,balle->centre.z);
+        //drawCircle(balle->r);
+        glColor3f(1.,0.,0.);
+        glTranslatef(balle[0],balle[1],balle[2]);
+        drawCircle(balle[3]);
+    glPopMatrix();
+};
+
 void drawMenu()
 {
 	glPushMatrix();

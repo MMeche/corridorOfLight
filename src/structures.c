@@ -2,11 +2,29 @@
 
 struct Rect obstacle_list[1];
 struct Rect line_speed[4];
+//struct Ball *balle;
+float balle[9];
+
+float translate_x =0.f;
+float translate_y = 0.f;
+
 
 struct Rect o1;
 
-void init_structures(struct Rect* line_speed,struct Rect* obstacle_list)
+void init_structures(struct Rect* line_speed,struct Rect* obstacle_list, float* balle/*struct Ball* balle*/)
 {
+    
+    balle[0] = 0.f; //x
+    balle[1] = -2.5f; //y
+    balle[2] = 0.f; //z
+    
+    balle[4] = 0.f; //speedx
+    balle[5] = 0.f; //speedy
+    balle[6] = 0.f; //speedz
+
+    balle[3] = 0.25f; //r
+    balle[7] = 1; //sticky doses
+    balle[8] =  0; //valeurs négatives pour une vitesse ralentie, positive pour accélérée et nulle pour normale.
     
     //On charge les lignes affichées pour simuler la vitesse (4*4 points)    
     for(int i = 0 ; i<5;i++)

@@ -24,7 +24,7 @@ static const double FRAMERATE_IN_SECONDS = 1. / 30.;
 static int flag_animate_rot_scale = 0;
 static int flag_animate_rot_arm = 0;
 
-/* Variable */
+/* Speed Constant */
 
 
 
@@ -111,8 +111,7 @@ void onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
 	}
 }
 
-float translate_x = 0.0f;
-float translate_y = 0.0f;
+
 
 void onMouseMove(GLFWwindow* window, double xpos, double ypos)
 {
@@ -121,8 +120,16 @@ void onMouseMove(GLFWwindow* window, double xpos, double ypos)
     float normalizedY = (float)((ypos/(WINDOW_HEIGHT/(8)) - 4));
 	if((normalizedX<3.5 && normalizedY<1.5) && (normalizedX>-3.5 && normalizedY>-1.5))
 	{
+		if(balle[7]!=0 && (balle[1]==-2.5f && (balle[0]<(translate_x)+0.5 && balle[0]>(translate_x)-0.5) && (balle[2]<(translate_y)+0.5 && balle[2]>(translate_y)-0.5))) 
+		{//la balle est collante et est collée  : il faut qu'elle suive les mouvements de la raquette.
+			balle[0] = - normalizedX;
+			balle[2] =  - normalizedY;
+			balle[1] = -2.5;
+		}
+
 		translate_x = -normalizedX;
 		translate_y = -normalizedY;
+		
 
 	}
 }
@@ -131,11 +138,10 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 {
 	double x,y;
 	glfwGetCursorPos(window,&x,&y);
+	//Clic gauche (envoyer la balle et menu)
 	if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
 		
-		printf("x %f\n",x);
-		printf("y %f\n",y);
-		//Action pour le menu
+		//Actions pour le menu
 		if(menu == 1 && x >= (WINDOW_WIDTH/2)-190 && x<= (WINDOW_WIDTH/2)+190)
 		{
 			if(y>=(WINDOW_HEIGHT/2)-(28.5+80+57) && y<=(WINDOW_HEIGHT/2) - (28.5+40+57))
@@ -145,6 +151,7 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 				new_game = 1;
 				running = 1;
 				speed = 0.3f;
+				
 			}
 			if(y>=(WINDOW_HEIGHT/2)-(28.5+40) && y<=(WINDOW_HEIGHT/2)-(28.5))
 			{
@@ -167,12 +174,37 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 			}
 		}
 		//Action pour envoyer la balle
-		if(running==1 && (menu==0 && rules==0))
+		if(running==1 && (menu==0 && rules==0) && balle[7]!=0 && (balle[1]==-2.5f && (balle[0]<(translate_x)+0.5 && balle[0]>(translate_x)-0.5) && (balle[2]<(translate_y)+0.5 && balle[2]>(translate_y)-0.5)))
+		{
+			
+			balle[7] --; //on perd un sticky dose
+			if(balle[8]<0)
+			{
+				balle[5] = -cool_ball_speed;
+				balle[1] -= 0.001f;
+				balle[8]++;
+			};
+			if(balle[8]>0)
+			{
+				balle[5] = -speedy_ball_speed;
+				balle[1] -= 0.001f;				
+				balle[8]++;
+			};
+			if(balle[8]==0)
+			{
+				balle[5] = -normal_ball_speed;
+				balle[1] -= 0.001f;
+			};
+
+
+		};
+		//Action pour la page de règle
+		if(rules==1)
 		{
 
 		};
 	};
-	//Action "avancer" la raquette
+	//Clic droit = Action "avancer" la raquette
 	if(button==GLFW_MOUSE_BUTTON_RIGHT && GLFW_PRESS)
 	{
 		float normX = (float)((x/(WINDOW_WIDTH/(8)) - 4));
@@ -191,7 +223,7 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 int main(int argc, char** argv)
 {
     /* GLFW initialization */
-
+	
     GLFWwindow* window;
     if (!glfwInit()) return -1;
 
@@ -221,7 +253,7 @@ int main(int argc, char** argv)
 	
 	
 	
-
+	
     while (!glfwWindowShouldClose(window)) {
         double startTime = glfwGetTime();
 
@@ -239,9 +271,12 @@ int main(int argc, char** argv)
 		
 		if(running == 1)
 		{
+			
 			if(new_game == 1)
 			{
-				init_structures(line_speed,obstacle_list);
+				
+				init_structures(line_speed,obstacle_list,balle);
+				
 				//si c'est une nouvelle parie on recharge dans la liste une nouvelle serie d'obstacle,
 				//on remet le compteur de score à zéro, et on redonne toute ses vies au joueur.
 				new_game = 0;
@@ -257,6 +292,8 @@ int main(int argc, char** argv)
 			drawCorridor();	
 			drawLineSpeed();
 			drawObstacles();
+			
+			drawBallz();
 			//Pour gérer les parties : il va y avoir une liste d'obstacles (nombre fixe, générés aléatoirement ou non).
 			//Une fois que tous les obstacles sont passés, la partie se termine. 
 			
@@ -265,10 +302,11 @@ int main(int argc, char** argv)
 				drawRaquette(translate_x, translate_y);
 				if(state_right==GLFW_PRESS)
 				{
-					avance_joueur(line_speed,obstacle_list);
-					//avance_balle(balle);
-				}
-			}
+					printf("%d\n",state_right);
+					avance_joueur(line_speed,obstacle_list);	
+				};
+				avance_balle(balle);
+			};
 			//ballz();
 			//drawHUD();
 		}
@@ -277,6 +315,7 @@ int main(int argc, char** argv)
 		if(menu==1)
 		{
 			drawMenu();
+			
 		};
 
 

@@ -23,7 +23,7 @@ void setCamera();
 /* Draw cannonic objet functions */
 void drawSquare(float r,float g,float b);
 
-void drawCircle();
+void drawCircle(double r);
 
 void drawRaquette(float translate_x, float translate_y);
 

@@ -1,6 +1,12 @@
 #include "../inc/interactions.h"
 
 float speed = 0.3f;
+
+
+const float normal_ball_speed = 0.5f;
+const float speedy_ball_speed = 0.7f;
+const float cool_ball_speed = 0.3f;
+
 int state_right;
 
 void avance_joueur(struct Rect* line_speed,struct Rect* obstacle_list)
@@ -37,3 +43,27 @@ void avance_joueur(struct Rect* line_speed,struct Rect* obstacle_list)
 		obstacle_list[i].csg.y += speed;
 	}
 };	
+
+void avance_balle(float* balle)
+{
+	if(balle[7]!=0 && (balle[1]==-2.5f && (balle[0]<(translate_x)+0.5 && balle[0]>(translate_x)-0.5) && (balle[1]<(translate_y)+0.5 && balle[1]>(translate_y)-0.5))) //la balle est collante et est collée  : il faut qu'elle suive les mouvements de la raquettes.
+	{
+		balle[4] = 0.f;
+		balle[5] = 0.f;
+		balle[6] = 0.f;
+	}
+	//Gestion des collisions
+	
+	
+	
+	
+	
+	//Update de la position. 
+	for(int i=0;i<3;i++)
+	{
+		//printf("%f\n",balle[i]);
+		//printf("%f\n",balle[i+4]);
+		balle[i] += balle[i+4];
+	};
+		
+};

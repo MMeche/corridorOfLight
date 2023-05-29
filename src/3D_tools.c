@@ -58,7 +58,7 @@ void drawRaquette(float x, float y) {
 }
 
 
-void drawCircle() {
+void drawCircle(double r) {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 		glRotatef(90.0f, 1.0f, 0.0f, 0.0f); // Rotation de 90 degrés autour de l'axe  x
@@ -67,7 +67,9 @@ void drawCircle() {
 		glVertex3f(0.0f, 0.0f, 0.0f);
 		float step_rad = 2 * M_PI / (float)NB_SEG_CIRCLE;
 		for (int i = 0; i <= NB_SEG_CIRCLE; i++) {
-			glVertex3f(cos(i * step_rad), sin(i * step_rad), 0.0f);
+			//printf("rcos : %f",r);
+		
+			glVertex3f(r*cos(i * step_rad), r*sin(i * step_rad), 0.0f);
 		}
 		
 	glEnd();
