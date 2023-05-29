@@ -9,6 +9,8 @@
 #include "../inc/draw_scene.h"
 #include "../inc/structures.h"
 #include "../inc/interactions.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "../inc/stb_image.h"
 
 
 /* Window properties */
@@ -134,6 +136,32 @@ void onMouseMove(GLFWwindow* window, double xpos, double ypos)
 	}
 }
 
+GLuint textureID1;
+GLuint textureID2;
+
+
+void glGenTextures(GLsizei n, GLuint* textures);
+
+
+void loadTexture(const char* filename, GLuint* textureID) {
+    int width, height, channels;
+    unsigned char* image = stbi_load(filename, &width, &height, &channels, 0);
+
+    if (image == NULL) {
+        printf("Erreur lors du chargement de l'image : %s\n", filename);
+        return;
+    }
+
+    glGenTextures(1, textureID);
+    glBindTexture(GL_TEXTURE_2D, *textureID);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+
+    stbi_image_free(image);
+}
+
+
+
 
 void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 {
@@ -221,6 +249,7 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 	};
 };
 
+
 int main(int argc, char** argv)
 {
     /* GLFW initialization */
@@ -253,7 +282,14 @@ int main(int argc, char** argv)
     glEnable(GL_DEPTH_TEST);
 	
 	
-	
+	loadTexture("logo_imac.jpg", &textureID1);
+	loadTexture("../Textures/logo_imac.jpg", &textureID2);
+
+	 glBegin(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, textureID1);
+		glBindTexture(GL_TEXTURE_2D, textureID2);
+    glEnd();
+
 	
     while (!glfwWindowShouldClose(window)) {
         double startTime = glfwGetTime();
@@ -272,7 +308,7 @@ int main(int argc, char** argv)
 		
 		if(running == 1)
 		{
-			
+			glBegin(GL_TEXTURE_2D);
 			if(new_game == 1)
 			{
 				
@@ -282,6 +318,9 @@ int main(int argc, char** argv)
 				//on remet le compteur de score à zéro, et on redonne toute ses vies au joueur.
 				new_game = 0;
 			}
+		
+		glGenTextures(1, &textureID1);
+		glGenTextures(1, &textureID2);
 
 			glPushMatrix();
 				glTranslatef(0.,-40.,0.);	
@@ -290,14 +329,16 @@ int main(int argc, char** argv)
 				drawSquare(0.,0.,0.);
 			glPopMatrix();
 			glPushMatrix();
-				score(1., 1., 0.);
+				score(textureID1);
 				glTranslatef(0.6, 0., 0.);
-				score(0., 1., 0.);
+				score(textureID2);
 				glTranslatef(0.6, 0., 0.);
-				score(0., 1., 0.);
+				score(textureID1);
 				glTranslatef(0.6, 0., 0.);
-				score(0., 1., 0.);
+				score(textureID2);
 			glPopMatrix();	
+
+			glEnd();
 
 			drawCorridor();	
 			drawLineSpeed();
@@ -349,7 +390,8 @@ int main(int argc, char** argv)
             glfwWaitEventsTimeout(FRAMERATE_IN_SECONDS - elapsedTime);
         }
     }
-
+	glDeleteTextures(1, &textureID1);
+	glDeleteTextures(1, &textureID2);
     glfwTerminate();
     return 0;
 }

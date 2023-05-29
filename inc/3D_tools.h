@@ -31,7 +31,7 @@ void drawCone();
 
 void drawSphere();
 
-void score();
+void score(GLuint textureID);
 
 void drawWall(struct Rect wall, float r, float g, float b);
 
