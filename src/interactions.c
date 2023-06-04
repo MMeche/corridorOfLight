@@ -16,7 +16,7 @@ int state_right;
 void avance_joueur(struct Rect* line_speed,struct Rect* obstacle_list)
 {
     int raquetteIsBlocked = 0;
-	for(int i = 0 ; i < nbObsRestant(obstacle_list);i++)
+	for(int i=0;i<totalObs;i++)
 	{
 		/*On test si la raquette peut avancer*/
 		if((obstacle_list[i].cid.y<-2.5 && obstacle_list[i].cid.y + speed > -2.5)
@@ -52,12 +52,13 @@ void avance_joueur(struct Rect* line_speed,struct Rect* obstacle_list)
 			}
 		};
 		
-		for(int i=0;i<nbObsRestant(obstacle_list);i++)
+		for(int i=0;i<totalObs;i++)
 		{
 			obstacle_list[i].cid.y += speed;
 			obstacle_list[i].csd.y += speed;
 			obstacle_list[i].cig.y += speed;
 			obstacle_list[i].csg.y += speed;
+			
 		}
 	};
 };	
@@ -74,7 +75,7 @@ void avance_balle(float* balle)
 	if(balle[5]<0) 
 	{
 		/*Cas où la balle va vers le fond*/
-		for(int i=0;i<nbObsRestant(obstacle_list);i++)
+		for(int i=0;i<totalObs;i++)
 		{
 			if(balle[1]>obstacle_list[i].cid.y)
 			{
@@ -92,7 +93,7 @@ void avance_balle(float* balle)
 			if(balle[5]>0) 
 			{
 				/*Cas où la balle va vers la raquette*/
-				for(int i=0;i<nbObsRestant(obstacle_list);i++)
+				for(int i=0;i<totalObs;i++)
 				/*Gestion des collisions avec les murs*/
 				{
 					if(balle[1]<obstacle_list[i].cid.y)

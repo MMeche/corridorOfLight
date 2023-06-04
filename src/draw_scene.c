@@ -25,59 +25,30 @@ void drawSection(float r1,float g1,float b1,float r2,float g2, float b2){
 
 void drawCorridor()
 {
-    //Première moitié du couloir
-    drawSection(0.223,0.141,0.243,0.329,0.250,0.49);
+    drawSection(0.086,0.125,0.259,0.035,0.220,0.518);
     glPushMatrix();
 			glRotatef(180.,0.,1.,0.);
-			drawSection(0.223,0.141,0.243,0.329,0.250,0.49);
+			drawSection(0.086,0.125,0.259,0.035,0.220,0.518);
 	glPopMatrix();
     glPushMatrix();
         glTranslatef(0.,-4.,0.);
-        drawSection(0.223,0.141,0.243,0.329,0.250,0.49);
+        drawSection(0.004,0.020,0.16,0.071,0.160,0.404);
         glPushMatrix();
 			glRotatef(180.,0.,1.,0.);
-			drawSection(0.223,0.141,0.243,0.329,0.250,0.49);
+			drawSection(0.004,0.020,0.16,0.071,0.160,0.404);
 	    glPopMatrix();
         glTranslatef(0.,-4.,0.);
-        drawSection(0.223,0.141,0.243,0.329,0.250,0.49);
+        drawSection(0.004,0.011,0.060,0.078,0.117,0.254);
         glPushMatrix();
 			glRotatef(180.,0.,1.,0.);
-			drawSection(0.223,0.141,0.243,0.329,0.250,0.49);
+			drawSection(0.004,0.011,0.060,0.078,0.117,0.254);
 	    glPopMatrix();
         glTranslatef(0.,-4.,0.);
-        drawSection(0.223,0.141,0.243,0.329,0.250,0.49);
+        drawSection(0.,0.,0.,0.004,0.020,0.16);
         glPushMatrix();
 			glRotatef(180.,0.,1.,0.);
-			drawSection(0.223,0.141,0.243,0.329,0.250,0.49);
+			drawSection(0.,0.,0.,0.004,0.020,0.16);
 	    glPopMatrix();
-    glPopMatrix();
-    //Deuxième moitié du couloir
-    glPushMatrix();
-        drawSection(0.223,0.141,0.243,0.329,0.250,0.49);
-        glPushMatrix();
-                glRotatef(180.,0.,1.,0.);
-                drawSection(0.223,0.141,0.243,0.329,0.250,0.49);
-        glPopMatrix();
-        glPushMatrix();
-            glTranslatef(0.,-4.,0.);
-            drawSection(0.223,0.141,0.243,0.329,0.250,0.49);
-            glPushMatrix();
-                glRotatef(180.,0.,1.,0.);
-                drawSection(0.223,0.141,0.243,0.329,0.250,0.49);
-            glPopMatrix();
-            glTranslatef(0.,-4.,0.);
-            drawSection(0.223,0.141,0.243,0.329,0.250,0.49);
-            glPushMatrix();
-                glRotatef(180.,0.,1.,0.);
-                drawSection(0.223,0.141,0.243,0.329,0.250,0.49);
-            glPopMatrix();
-            glTranslatef(0.,-4.,0.);
-            drawSection(0.223,0.141,0.243,0.329,0.250,0.49);
-            glPushMatrix();
-                glRotatef(180.,0.,1.,0.);
-                drawSection(0.223,0.141,0.243,0.329,0.250,0.49);
-            glPopMatrix();
-        glPopMatrix();
     glPopMatrix();
 };
 
@@ -106,13 +77,12 @@ void drawLineSpeed()
 void drawObstacles()
 {
     
-   
-    for(int i=0;i<((&obstacle_list)[1] - obstacle_list);i++)
+    for(int i=0;i<totalObs;i++)
     {
-        if(obstacle_list[i].cid.y<-2.5)
+        if(obstacle_list[i].cid.y<-2.5 && obstacle_list[i].cid.y>-18.5)
         {
                 glPushMatrix();
-                    glColor3f(0.329,0.250,0.49);
+                    glColor3f(0.035,0.220,0.518);
                         glBegin(GL_TRIANGLE_FAN);
                         glVertex3f(obstacle_list[i].cid.x,obstacle_list[i].cid.y,obstacle_list[i].cid.z);
                         glVertex3f(obstacle_list[i].cig.x,obstacle_list[i].cid.y,obstacle_list[i].cig.z);

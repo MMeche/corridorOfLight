@@ -369,7 +369,6 @@ int main(int argc, char** argv)
 
         glfwSwapBuffers(window);
         glfwPollEvents();
-
         double elapsedTime = glfwGetTime() - startTime;
         if (elapsedTime < FRAMERATE_IN_SECONDS) {
             glfwWaitEventsTimeout(FRAMERATE_IN_SECONDS - elapsedTime);
