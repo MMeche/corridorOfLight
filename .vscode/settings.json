@@ -46,7 +46,8 @@
         "streambuf": "cpp",
         "cinttypes": "cpp",
         "typeinfo": "cpp",
-        "structures.h": "c"
+        "structures.h": "c",
+        "math.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

@@ -1,12 +1,10 @@
 #include "../inc/structures.h"
-
+int totalObs = 1;
 struct Rect obstacle_list[1];
 struct Rect line_speed[4];
 //struct Ball *balle;
 float balle[9];
 
-float translate_x =0.f;
-float translate_y = 0.f;
 
 
 struct Rect o1;
@@ -49,7 +47,8 @@ void init_structures(struct Rect* line_speed,struct Rect* obstacle_list, float* 
         line_speed[i]= lnew;
         
     }
-    //On entre la liste des obstacles du niveau. Il faut tous les entrer à la main donc c'est long.
+    /*On entre la liste des obstacles du niveau. Il faut tous les entrer à la main donc c'est long.
+    Possiblement à transformer en aléatoire pour plus tard*/
     
     o1.cid.x = -4;
     o1.cid.y = -18;
@@ -69,4 +68,17 @@ void init_structures(struct Rect* line_speed,struct Rect* obstacle_list, float* 
     
     obstacle_list[0] =  o1;   
 
+};
+
+int nbObsRestant(struct Rect* obstacle_list)
+{
+    int nb=0;
+    for(int i =0 ; i < totalObs ; i ++)
+    {
+        if(obstacle_list[i].cid.y<-2.5)
+        {
+            nb++;
+        }
+    }
+    return nb;
 }

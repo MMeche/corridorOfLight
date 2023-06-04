@@ -4,7 +4,6 @@
 #include <GL/glu.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 #include "../inc/3D_tools.h"
 #include "../inc/draw_scene.h"
 #include "../inc/structures.h"
@@ -238,7 +237,7 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 	{
 		float normX = (float)((x/(WINDOW_WIDTH/(8)) - 4));
     	float normY = (float)((y/(WINDOW_HEIGHT/(8)) - 4));
-		if((normX<3.5 && normY<1.5) && (normX>-3.5 && normY>-1.5))
+		if((normX<3.5 && normY<1.5) && (normX>-3.5 && normY>-1.5)&&(!(balle[7]!=0 && (balle[1]==-2.5))))
 		{
 			state_right = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT);
 		}
@@ -248,7 +247,6 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 		}
 	};
 };
-
 
 int main(int argc, char** argv)
 {
@@ -282,14 +280,7 @@ int main(int argc, char** argv)
     glEnable(GL_DEPTH_TEST);
 	
 	
-	loadTexture("logo_imac.jpg", &textureID1);
-	loadTexture("../Textures/logo_imac.jpg", &textureID2);
-
-	 glBegin(GL_TEXTURE_2D);
-        glBindTexture(GL_TEXTURE_2D, textureID1);
-		glBindTexture(GL_TEXTURE_2D, textureID2);
-    glEnd();
-
+	
 	
     while (!glfwWindowShouldClose(window)) {
         double startTime = glfwGetTime();
@@ -308,7 +299,7 @@ int main(int argc, char** argv)
 		
 		if(running == 1)
 		{
-			glBegin(GL_TEXTURE_2D);
+			
 			if(new_game == 1)
 			{
 				
@@ -319,6 +310,11 @@ int main(int argc, char** argv)
 				new_game = 0;
 			}
 		
+		
+		glGenTextures(1, &textureID1);
+		glGenTextures(1, &textureID2);
+
+
 		glGenTextures(1, &textureID1);
 		glGenTextures(1, &textureID2);
 
@@ -328,17 +324,6 @@ int main(int argc, char** argv)
 				glScalef(60.,60.,0.);			
 				drawSquare(0.,0.,0.);
 			glPopMatrix();
-			glPushMatrix();
-				score(textureID1);
-				glTranslatef(0.6, 0., 0.);
-				score(textureID2);
-				glTranslatef(0.6, 0., 0.);
-				score(textureID1);
-				glTranslatef(0.6, 0., 0.);
-				score(textureID2);
-			glPopMatrix();	
-
-			glEnd();
 
 			drawCorridor();	
 			drawLineSpeed();
@@ -390,8 +375,7 @@ int main(int argc, char** argv)
             glfwWaitEventsTimeout(FRAMERATE_IN_SECONDS - elapsedTime);
         }
     }
-	glDeleteTextures(1, &textureID1);
-	glDeleteTextures(1, &textureID2);
+
     glfwTerminate();
     return 0;
 }

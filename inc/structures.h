@@ -2,6 +2,7 @@
 #define STRUCTURES
 #include <stdlib.h>
 #include <stdio.h>
+#include<math.h>
 struct Point
 {
     double x;
@@ -16,7 +17,6 @@ struct Rect
     struct Point cig;
     struct Point cid;
     
-    struct Rect* next;
 };
 
 struct Ball
@@ -38,8 +38,9 @@ extern float translate_x ;
 extern float translate_y ;
 
 
-extern struct Rect o1;
+extern struct Rect o1 ;
 
 void init_structures(struct Rect* line_speed, struct Rect* obstacle_list, float* balle /*struct Ball* balle*/);
+int nbObsRestant(struct Rect* obstacle_list);
 
 #endif
