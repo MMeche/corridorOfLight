@@ -281,7 +281,7 @@ int main(int argc, char** argv)
 	glfwSetMouseButtonCallback(window,mouse_button_callback);
 
     //########_CHARGER_IMAGES_###################
-    GLuint texture[32];
+    GLuint64 texture[32];
 
     // Charger image menu
     texture[0] = loadTexture("doc/logo_imac.jpg");
