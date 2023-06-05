@@ -59,5 +59,6 @@ extern float rotation ;
 
 /*Le nombre de vies*/
 extern int lives;
+extern int end;
 
 #endif

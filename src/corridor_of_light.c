@@ -76,31 +76,6 @@ void onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
 			case GLFW_KEY_P :
 				glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 				break;
-			case GLFW_KEY_R :
-				flag_animate_rot_arm = 1-flag_animate_rot_arm;
-				break;
-			case GLFW_KEY_T :
-				flag_animate_rot_scale = 1-flag_animate_rot_scale;
-				break;drawFrame();
-				if(dist_zoom>1.0f) dist_zoom*=0.9;
-				printf("Zoom is %f\n",dist_zoom);
-				break;
-			case GLFW_KEY_UP :
-				if (phy>2) phy -= 2;
-				printf("Phy %f\n",phy);
-				break;
-			case GLFW_KEY_DOWN :
-				if (phy<=88.) phy += 2;
-				printf("Phy %f\n",phy);
-				break;
-			case GLFW_KEY_LEFT :
-				theta -= 5;
-				printf("Theta %f\n",theta);
-				break;
-			case GLFW_KEY_RIGHT :
-				theta += 5;
-				printf("Theta %f\n",theta);
-				break;
 			default: fprintf(stdout,"Touche non gérée (%d)\n",key);
 		}
 	}
@@ -173,12 +148,12 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 				speed = 0.3f;
 				
 			}
-			if(y>=(WINDOW_HEIGHT/2)-(28.5+40) && y<=(WINDOW_HEIGHT/2)-(28.5))
+			/*if(y>=(WINDOW_HEIGHT/2)-(28.5+40) && y<=(WINDOW_HEIGHT/2)-(28.5))
 			{
 				//Règles
 				menu = 0;
 				rules = 1;
-			}
+			}Pas le temps ...*/
 			if(y>=(WINDOW_HEIGHT/2)+28.5 && y<=(WINDOW_HEIGHT/2)+(28.5+40) && running == 1)
 			{
 				//Resume
@@ -284,26 +259,7 @@ int main(int argc, char** argv)
     GLuint64 texture[32];
 
     // Charger image menu
-   	/*texture[0] = loadTexture("doc/0.jpg");
-    texture[1] = loadTexture("doc/1.jpg");
-    texture[2] = loadTexture("doc/2.jpg");
-    texture[3] = loadTexture("doc/3.jpg");
-    texture[4] = loadTexture("doc/4.jpg");
-    texture[5] = loadTexture("doc/5.jpg");
-    texture[6] = loadTexture("doc/6.jpg");
-    texture[7] = loadTexture("doc/7.jpg");
-    texture[8] = loadTexture("doc/8.jpg");
-    texture[9] = loadTexture("doc/9.jpg");*/
-	texture[9] = loadTexture("doc/QUITTER.jpg");
-    texture[10] = loadTexture("doc/MENU.jpg");
-    texture[11] = loadTexture("doc/REGLES.jpg");
-    texture[12] = loadTexture("doc/REJOUER.jpg");
-    texture[13] = loadTexture("doc/REPRENDRE.jpg");
-    
-    texture[15] = loadTexture("doc/STAGE.jpg");
-    texture[16] = loadTexture("doc/TOAD.jpg");
-    texture[17] = loadTexture("doc/MUR.jpg");
-	texture[14] = loadTexture("doc/VIE.jpg");
+	texture[0] = loadTexture("doc/VIE.jpg");
 
     // Charger image fin réussite
     //texture[1] = loadTexture("doc/JEU_ECHEC.jpg");
@@ -351,7 +307,7 @@ int main(int argc, char** argv)
 		
 		
 			
-			if(menu == 0 && lives!=0)
+			if(menu == 0 && lives!=0 && end==0);
 			{
 				glPushMatrix();
 					glTranslatef(0.,-40.,0.);	
@@ -397,16 +353,78 @@ int main(int argc, char** argv)
 			//drawHUD();
 		}
 
+		if(end == 1)
+		{
+				glPushMatrix();
+					glTranslatef(0.,-40.,0.);	
+					glRotatef(90.,1.,0.,0.);
+					glScalef(60.,60.,0.);			
+					drawSquare(0.,0.,0.);
+				glPopMatrix();
+
+				drawCorridor();	
+				drawLineSpeed();
+				drawObstacles();
+				glPushMatrix();
+					glTranslatef(0.,-40.,0.);	
+					glRotatef(90.,1.,0.,0.);
+					glScalef(60.,60.,0.);			
+					drawSquare(0.,0.,0.);
+				glPopMatrix();
+				glPushMatrix();
+				glColor3f(1,1,1);
+            glBindTexture(GL_TEXTURE_2D, texture[1]);
+					glTranslatef(3.2, 2.1, 2.);
+					/*Petit bouquet final*/
+					for(int j =0 ; j<lives*2 ; j++)
+					{	glPushMatrix();
+						glTranslatef(.2*j,0.,.2*j);
+						score(texture[1]);
+						glPopMatrix();
+						glPushMatrix();
+						glTranslatef(.2,0.,.2*j);
+						score(texture[1]);
+						glPopMatrix();
+						glPushMatrix();
+						glTranslatef(.2*j,0.,.2);
+						score(texture[1]);
+						glPopMatrix();
+						glPushMatrix();
+						glTranslatef(-.2*j,0.,.2*j);
+						score(texture[1]);
+						glPopMatrix();
+						glPushMatrix();
+						glTranslatef(.2*j,0.,-.2*j);
+						score(texture[1]);
+						glPopMatrix();
+						glPushMatrix();
+						glTranslatef(-.2*j,0.,-.2*j);
+						score(texture[1]);
+						glPopMatrix();
+						glPushMatrix();
+						glTranslatef(.2,0.,-.2*j);
+						score(texture[1]);
+						glPopMatrix();
+						glPushMatrix();
+						glTranslatef(-.2*j,0.,.2);
+						score(texture[1]);
+						glPopMatrix();
+					}
+						
+						
+				glPopMatrix();
+
+		};
+
 		if(lives==0)
 		{
 			gameOver();
-		}
+		};
 
 
 		if(menu==1)
 		{
-			drawMenu(texture[12],texture[11],texture[13],texture[9]);
-			
+			drawMenu();
 		};
 
 

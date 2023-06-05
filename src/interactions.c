@@ -2,6 +2,7 @@
 
 float speed = 0.3f;
 int lives = 1;
+int end = 0;
 
 
 const float normal_ball_speed = 0.35f;
@@ -124,6 +125,7 @@ void avance_joueur(struct Rect* line_speed,struct Rect* obstacle_list,struct tak
 			obstacle_list[i].csg.y += speed;
 			
 		}
+		if(obstacle_list[totalObs-1].cid.y>-10){end=1;}
 		
 		for(int i=0;i<totalTake;i++)
 		{
