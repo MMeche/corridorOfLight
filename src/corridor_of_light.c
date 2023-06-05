@@ -20,9 +20,6 @@ static float aspectRatio = 1.0;
 /* Minimal time wanted between two images */
 static const double FRAMERATE_IN_SECONDS = 1. / 60.;
 
-/* IHM flag */
-static int flag_animate_rot_scale = 0;
-static int flag_animate_rot_arm = 0;
 
 /*Menu Handlers*/
 static int running = 0;
