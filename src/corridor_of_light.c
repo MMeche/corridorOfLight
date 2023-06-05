@@ -287,7 +287,7 @@ int main(int argc, char** argv)
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
 		setCamera();
-		drawFrame();
+		
 
 		/* Scene rendering */
 		
