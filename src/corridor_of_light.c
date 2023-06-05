@@ -284,7 +284,26 @@ int main(int argc, char** argv)
     GLuint64 texture[32];
 
     // Charger image menu
-    texture[0] = loadTexture("doc/logo_imac.jpg");
+   	/*texture[0] = loadTexture("doc/0.jpg");
+    texture[1] = loadTexture("doc/1.jpg");
+    texture[2] = loadTexture("doc/2.jpg");
+    texture[3] = loadTexture("doc/3.jpg");
+    texture[4] = loadTexture("doc/4.jpg");
+    texture[5] = loadTexture("doc/5.jpg");
+    texture[6] = loadTexture("doc/6.jpg");
+    texture[7] = loadTexture("doc/7.jpg");
+    texture[8] = loadTexture("doc/8.jpg");
+    texture[9] = loadTexture("doc/9.jpg");*/
+	texture[9] = loadTexture("doc/QUITTER.jpg");
+    texture[10] = loadTexture("doc/MENU.jpg");
+    texture[11] = loadTexture("doc/REGLES.jpg");
+    texture[12] = loadTexture("doc/REJOUER.jpg");
+    texture[13] = loadTexture("doc/REPRENDRE.jpg");
+    
+    texture[15] = loadTexture("doc/STAGE.jpg");
+    texture[16] = loadTexture("doc/TOAD.jpg");
+    texture[17] = loadTexture("doc/MUR.jpg");
+	texture[14] = loadTexture("doc/VIE.jpg");
 
     // Charger image fin réussite
     //texture[1] = loadTexture("doc/JEU_ECHEC.jpg");
@@ -312,7 +331,7 @@ int main(int argc, char** argv)
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
 		setCamera();
-
+		drawFrame();
 
 		/* Scene rendering */
 		
@@ -332,7 +351,7 @@ int main(int argc, char** argv)
 		
 		
 			
-			if(menu == 0)
+			if(menu == 0 && lives!=0)
 			{
 				glPushMatrix();
 					glTranslatef(0.,-40.,0.);	
@@ -355,15 +374,12 @@ int main(int argc, char** argv)
 					drawSquare(0.,0.,0.);
 				glPopMatrix();
 				glPushMatrix();
-				glColor3f(1,1,1); 
+				glColor3f(1,1,1);
             glBindTexture(GL_TEXTURE_2D, texture[1]);
-					score(texture[1]);
-					glTranslatef(0.6, 0., 0.);
-					score(texture[1]);
-					glTranslatef(0.6, 0., 0.);
-					score(texture[1]);
-					glTranslatef(0.6, 0., 0.);
-					score(texture[1]);
+					for(int i = 0 ; i < lives ; i++)
+					{	score(texture[1]);
+						glTranslatef(0.6, 0., 0.);
+					}	
 				glPopMatrix();	
 
 			glEnd();
@@ -389,7 +405,7 @@ int main(int argc, char** argv)
 
 		if(menu==1)
 		{
-			drawMenu();
+			drawMenu(texture[12],texture[11],texture[13],texture[9]);
 			
 		};
 

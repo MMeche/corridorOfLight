@@ -47,7 +47,8 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "structures.h": "c",
-        "math.h": "c"
+        "math.h": "c",
+        "stb_image.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

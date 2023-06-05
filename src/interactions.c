@@ -136,6 +136,7 @@ void avance_balle(float* balle)
 {
 	if(balle[7]!=0 && (balle[1]+balle[5]+balle[3]>-2.5f && (balle[0]<(translate_x)+sizeOfRaq && balle[0]>(translate_x)-sizeOfRaq) && (balle[2]<(translate_y)+sizeOfRaq && balle[2]>(translate_y)-sizeOfRaq))) //la balle est collante et est collée  : il faut qu'elle suive les mouvements de la raquette.
 	{
+		//state_right = 0;
 		balle[4] = 0.f;
 		balle[5] = 0.f;
 		balle[6] = 0.f;
@@ -148,7 +149,7 @@ void avance_balle(float* balle)
 		/*Gestion des collisions avec la raquette*/
 		if(balle[1]+balle[5]+balle[3]>-2.5 && (balle[0] < (translate_x+sizeOfRaq) && balle[0] > (translate_x-sizeOfRaq)) && (balle[2] < (translate_y + sizeOfRaq) && balle[2] > (translate_y -sizeOfRaq)))
 		{
-		/*C'est la fonction de renvoi de la balle par la raquette (pour le moment simple rebond selon y)*/
+		/*C'est la fonction de renvoi de la balle par la raquette*/
 			if(balle[8]==0)
 			{
 				balle[5] = normal_ball_speed;

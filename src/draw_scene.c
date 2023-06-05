@@ -105,9 +105,15 @@ void drawBallz()
         glTranslatef(balle[0],balle[1],balle[2]);
         drawCircle(balle[3]);
     glPopMatrix();
+    glPushMatrix();
+        glColor3f(0.,0.,0.);
+        glTranslatef(balle[0],balle[1],-2);
+        glRotatef(90.,1.,0.,0.);
+        drawCircle(balle[3]);
+    glPopMatrix();
 };
 
-void drawMenu()
+void drawMenu(GLuint rejouer,GLuint règles,GLuint reprendre,GLuint quitter)
 {
 	glPushMatrix();
         glRotatef(90.,1.,0.,0.);
@@ -119,7 +125,7 @@ void drawMenu()
         glPushMatrix();
             glTranslatef(0.,0.75,-0.5);
             glScalef(2.,0.2,0.);
-            drawSquare(1.,1.,1.);
+            drawSquare(0.,0.,1.);
         glPopMatrix();
         glPushMatrix();
             glTranslatef(0.,0.25,-0.5);

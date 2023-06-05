@@ -1,9 +1,9 @@
 #include "../inc/structures.h"
 
-int totalObs = 24;
-int totalTake = 1;
+int totalObs = 26;
+int totalTake = 6;
 
-struct Rect obstacle_list[24];
+struct Rect obstacle_list[26];
 struct Rect line_speed[4];
 struct takeMe takeable_list[6];
 //struct Ball *balle;
@@ -40,13 +40,15 @@ struct Rect o20;
 struct Rect o21 ;
 struct Rect o22;
 struct Rect o23 ;
-
+struct Rect o24;
+struct Rect o25;
 struct Rect final;
 
 struct takeMe b1;
 struct takeMe b2;
 struct takeMe b3;
 struct takeMe b4;
+struct takeMe b5;
 struct takeMe m1;
 struct takeMe m2;
 
@@ -505,20 +507,56 @@ void init_structures(struct Rect* line_speed,struct Rect* obstacle_list, float* 
 
 //
 
+    o24.cid.x = - 4;
+    o24.cid.y = - 124;
+    o24.cid.z =  -2;
+
+    o24.cig.x = 4;
+    o24.cig.y = -124;
+    o24.cig.z = -2;
+
+    o24.csd.x = -4;
+    o24.csd.y = -124;
+    o24.csd.z = 0;
+
+    o24.csg.x = 4;
+    o24.csg.y = -124;
+    o24.csg.z = 0;
+
+//
+
+    o25.cid.x = - 4;
+    o25.cid.y = - 132;
+    o25.cid.z =  0;
+
+    o25.cig.x = 4;
+    o25.cig.y = -132;
+    o25.cig.z = 0;
+
+    o25.csd.x = -4;
+    o25.csd.y = -132;
+    o25.csd.z = 2;
+
+    o25.csg.x = 4;
+    o25.csg.y = -132;
+    o25.csg.z = 2;
+
+//
+
     final.cid.x = -4;
-    final.cid.y = -138;
+    final.cid.y = -178;
     final.cid.z = -2;
 
     final.cig.x = 4;
-    final.cig.y = -138;
+    final.cig.y = -178;
     final.cig.z = -2;
 
     final.csd.x = -4;
-    final.csd.y = -138;
+    final.csd.y = -178;
     final.csd.z = 2;
 
     final.csg.x = 4;
-    final.csg.y = -138;
+    final.csg.y = -178;
     final.csg.z = 2;
     
     obstacle_list[0] =  o1;
@@ -544,44 +582,52 @@ void init_structures(struct Rect* line_speed,struct Rect* obstacle_list, float* 
     obstacle_list[20] = o21;
     obstacle_list[21] = o22;
     obstacle_list[22] = o23;
-
-
-
-
-    obstacle_list[23] = final;   
+    obstacle_list[23] = o24;
+    obstacle_list[24] = o25;
+    obstacle_list[25] = final;   
 
     b1.type = 'c';
     b1.pos.x = 1;
-    b1.pos.y = -6.5;
-    b1.pos.z = 1;
+    b1.pos.y = -10.;
+    b1.pos.z = 0;
 
     b2.type = 'r';
-    b2.pos.x = 1;
-    b2.pos.y = -6.5;
-    b2.pos.z = 1;
+    b2.pos.x = 1.5;
+    b2.pos.y = -100;
+    b2.pos.z = -0.5;
 
     b3.type = 'g';
-    b3.pos.x = 1;
-    b3.pos.y = -6.5;
+    b3.pos.x = 2;
+    b3.pos.y = -92;
     b3.pos.z = 1;
 
     b4.type = 'v';
     b4.pos.x = 1;
-    b4.pos.y = -6.5;
-    b4.pos.z = 1;
+    b4.pos.y = -46;
+    b4.pos.z = 0.5;
+
+    b5.type = 'v';
+    b5.pos.x = 1;
+    b5.pos.y = -6.5;
+    b5.pos.z = 1;
 
     m1.type = 'a';
-    m1.pos.x = 1;
-    m1.pos.y = -6.5;
-    m1.pos.z = 1;
+    m1.pos.x = -2;
+    m1.pos.y = -30;
+    m1.pos.z = -1;
 
     m2.type = 'p';
-    m2.pos.x = 1;
-    m2.pos.y = -6.5;
-    m2.pos.z = 1;
+    m2.pos.x = 2;
+    m2.pos.y = -80;
+    m2.pos.z = -1;
 
 
-    takeable_list[0] = b3;
+    takeable_list[0] = b1;
+    takeable_list[1] = b4;
+    takeable_list[2] = m2;
+    takeable_list[3] = b3;
+    takeable_list[4] = m1;
+    takeable_list[5] = b2;
 
 };
 

@@ -20,7 +20,7 @@ void drawObstacles();
 
 void drawBallz();
 
-void drawMenu();
+void drawMenu(GLuint rejouer,GLuint règles,GLuint reprendre,GLuint quitter);
 
 void gameOver();
 
