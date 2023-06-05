@@ -4,7 +4,7 @@
 
 /*Les tableaux d'objets et leur cardinaux*/
 extern struct Rect line_speed[4];
-extern struct Rect obstacle_list[5];
+extern struct Rect obstacle_list[12];
 extern int totalObs;
 extern struct takeMe takeable_list[6];
 extern int totalTake;
@@ -32,6 +32,15 @@ extern struct Rect o11 ;
 extern struct Rect o12 ;
 extern struct Rect o13 ;
 extern struct Rect o14 ;
+extern struct Rect o15;
+extern struct Rect o16 ;
+extern struct Rect o17;
+extern struct Rect o18 ;
+extern struct Rect o19;
+extern struct Rect o20;
+extern struct Rect o21 ;
+extern struct Rect o22;
+extern struct Rect o23 ;
 
 extern struct Rect final;
 

@@ -19,7 +19,7 @@ static const char WINDOW_TITLE[] = "Corridor";
 static float aspectRatio = 1.0;
 
 /* Minimal time wanted between two images */
-static const double FRAMERATE_IN_SECONDS = 1. / 30.;
+static const double FRAMERATE_IN_SECONDS = 1. / 60.;
 
 /* IHM flag */
 static int flag_animate_rot_scale = 0;

@@ -4,9 +4,9 @@ float speed = 0.3f;
 int lives = 1;
 
 
-const float normal_ball_speed = 0.5f;
-const float speedy_ball_speed = 0.7f;
-const float cool_ball_speed = 0.3f;
+const float normal_ball_speed = 0.35f;
+const float speedy_ball_speed = 0.6f;
+const float cool_ball_speed = 0.1f;
 
 
 
@@ -42,7 +42,7 @@ void avance_joueur(struct Rect* line_speed,struct Rect* obstacle_list,struct tak
 			/*La vie bonus rajoute une vie*/
 			if(takeable_list[i].type == 'v')
 			{
-				lives ++;
+				lives +=2;
 			};
 			/*Le bonus de ralenti, ralenti la balle*/
 			if(takeable_list[i].type == 'r')
@@ -76,15 +76,15 @@ void avance_joueur(struct Rect* line_speed,struct Rect* obstacle_list,struct tak
 			{
 				if(sizeOfRaq<0.75)
 				{
-					sizeOfRaq += 0.25f;
+					sizeOfRaq += 0.1f;
 				}
 			}
 			/*Le malus petit, rapettisse la raquette*/
 			if(takeable_list[i].type == 'p')
 			{
-				if(sizeOfRaq>0.25)
+				if(sizeOfRaq>0.35)
 				{
-					sizeOfRaq -= 0.25f;
+					sizeOfRaq -= 0.30f;
 				}
 			}
 		}

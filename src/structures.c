@@ -1,9 +1,9 @@
 #include "../inc/structures.h"
 
-int totalObs = 5;
+int totalObs = 24;
 int totalTake = 1;
 
-struct Rect obstacle_list[5];
+struct Rect obstacle_list[24];
 struct Rect line_speed[4];
 struct takeMe takeable_list[6];
 //struct Ball *balle;
@@ -12,7 +12,7 @@ float balle[9];
 /*Coordonées de la raquette (y=-2.5) */
 float translate_x =0.f;
 float translate_y = 0.f;
-float sizeOfRaq = 0.5f;
+float sizeOfRaq = 0.65f;
 
 /*Tourner*/
 float rotation = 0.f;
@@ -31,6 +31,15 @@ struct Rect o11 ;
 struct Rect o12;
 struct Rect o13 ;
 struct Rect o14;
+struct Rect o15;
+struct Rect o16 ;
+struct Rect o17;
+struct Rect o18 ;
+struct Rect o19;
+struct Rect o20;
+struct Rect o21 ;
+struct Rect o22;
+struct Rect o23 ;
 
 struct Rect final;
 
@@ -99,7 +108,8 @@ void init_structures(struct Rect* line_speed,struct Rect* obstacle_list, float* 
     o1.csg.y = -18;
     o1.csg.z = 2;
 
-  
+//
+
     o2.cid.x = -4;
     o2.cid.y = -22;
     o2.cid.z =  1;
@@ -116,6 +126,7 @@ void init_structures(struct Rect* line_speed,struct Rect* obstacle_list, float* 
     o2.csg.y = -22;
     o2.csg.z = 2;
 
+//
 
     o3.cid.x = -4;
     o3.cid.y = -22;
@@ -133,6 +144,7 @@ void init_structures(struct Rect* line_speed,struct Rect* obstacle_list, float* 
     o3.csg.y = -22;
     o3.csg.z = -1;
 
+//
 
     o4.cid.x = 2;
     o4.cid.y = -26;
@@ -150,23 +162,348 @@ void init_structures(struct Rect* line_speed,struct Rect* obstacle_list, float* 
     o4.csg.y = -26;
     o4.csg.z = 2;
 
+//
 
-    o5.cid.x = 2;
-    o5.cid.y = -26;
+    o5.cid.x = 0;
+    o5.cid.y = -30;
     o5.cid.z =  -2;
 
     o5.cig.x = 4;
-    o5.cig.y = -26;
+    o5.cig.y = -30;
     o5.cig.z = -2;
 
-    o5.csd.x = 2;
-    o5.csd.y = -26;
+    o5.csd.x = 0;
+    o5.csd.y = -30;
     o5.csd.z = 2;
 
     o5.csg.x = 4;
-    o5.csg.y = -26;
+    o5.csg.y = -30;
     o5.csg.z = 2;
 
+//
+
+    o6.cid.x = -4;
+    o6.cid.y = -34;
+    o6.cid.z =  -2;
+
+    o6.cig.x = -2;
+    o6.cig.y = -34;
+    o6.cig.z = -2;
+
+    o6.csd.x = -4;
+    o6.csd.y = -34;
+    o6.csd.z = 2;
+
+    o6.csg.x = -2;
+    o6.csg.y = -34;
+    o6.csg.z = 2;
+
+//
+    o7.cid.x = -4;
+    o7.cid.y = -38;
+    o7.cid.z =  -2;
+
+    o7.cig.x = 0;
+    o7.cig.y = -38;
+    o7.cig.z = -2;
+
+    o7.csd.x = -4;
+    o7.csd.y = -38;
+    o7.csd.z = 2;
+
+    o7.csg.x = 0;
+    o7.csg.y = -38;
+    o7.csg.z = 2;
+
+//
+    
+    o8.cid.x = -4;
+    o8.cid.y = -46;
+    o8.cid.z =  -2;
+
+    o8.cig.x = 4;
+    o8.cig.y = -46;
+    o8.cig.z = -2;
+
+    o8.csd.x = -4;
+    o8.csd.y = -46;
+    o8.csd.z = -1;
+
+    o8.csg.x = 4;
+    o8.csg.y = -46;
+    o8.csg.z = -1;
+
+//
+
+    o9.cid.x = -4;
+    o9.cid.y = -46;
+    o9.cid.z =  2;
+
+    o9.cig.x = 4;
+    o9.cig.y = -46;
+    o9.cig.z = 2;
+
+    o9.csd.x = -4;
+    o9.csd.y = -46;
+    o9.csd.z = 1;
+
+    o9.csg.x = 4;
+    o9.csg.y = -46;
+    o9.csg.z = 1;
+
+//
+
+    o10.cid.x = - 4;
+    o10.cid.y = -54;
+    o10.cid.z =  -2;
+
+    o10.cig.x = 4;
+    o10.cig.y = -54;
+    o10.cig.z = -2;
+
+    o10.csd.x = -4;
+    o10.csd.y = -54;
+    o10.csd.z = 0;
+
+    o10.csg.x = 4;
+    o10.csg.y = -54;
+    o10.csg.z = 0;
+
+//
+
+    o11.cid.x = - 4;
+    o11.cid.y = -60;
+    o11.cid.z =  1;
+
+    o11.cig.x = 4;
+    o11.cig.y = -60;
+    o11.cig.z = 1;
+
+    o11.csd.x = -4;
+    o11.csd.y = -60;
+    o11.csd.z = 2;
+
+    o11.csg.x = 4;
+    o11.csg.y = -60;
+    o11.csg.z = 2;
+
+//
+
+    o12.cid.x = - 4;
+    o12.cid.y = -68;
+    o12.cid.z =  0;
+
+    o12.cig.x = 4;
+    o12.cig.y = -68;
+    o12.cig.z = 0;
+
+    o12.csd.x = -4;
+    o12.csd.y = -68;
+    o12.csd.z = 2;
+
+    o12.csg.x = 4;
+    o12.csg.y = -68;
+    o12.csg.z = 2;
+
+//
+
+    o13.cid.x = - 4;
+    o13.cid.y = - 80;
+    o13.cid.z =  -2;
+
+    o13.cig.x = 4;
+    o13.cig.y = -80;
+    o13.cig.z = -2;
+
+    o13.csd.x = -4;
+    o13.csd.y = -80;
+    o13.csd.z =-1.5;
+
+    o13.csg.x = 4;
+    o13.csg.y = -80;
+    o13.csg.z = -1.5;
+
+//
+
+    o14.cid.x = - 4;
+    o14.cid.y = - 88;
+    o14.cid.z =  -2;
+
+    o14.cig.x = 4;
+    o14.cig.y = -88;
+    o14.cig.z = -2;
+
+    o14.csd.x = -4;
+    o14.csd.y = -88;
+    o14.csd.z = -1;
+
+    o14.csg.x = 4;
+    o14.csg.y = -88;
+    o14.csg.z = -1;
+
+//
+
+    o15.cid.x = - 4;
+    o15.cid.y = - 92;
+    o15.cid.z =  -2;
+
+    o15.cig.x = 4;
+    o15.cig.y = -92;
+    o15.cig.z = -2;
+
+    o15.csd.x = -4;
+    o15.csd.y = -92;
+    o15.csd.z = 0.5;
+
+    o15.csg.x = 4;
+    o15.csg.y = -92;
+    o15.csg.z = 0.5;
+
+//
+
+    o16.cid.x = 3.5;
+    o16.cid.y = - 100;
+    o16.cid.z =  -2;
+
+    o16.cig.x = 4;
+    o16.cig.y = -100;
+    o16.cig.z = -2;
+
+    o16.csd.x = 3.5;
+    o16.csd.y = -100;
+    o16.csd.z = 2;
+
+    o16.csg.x = 4;
+    o16.csg.y = -100;
+    o16.csg.z = 2;
+
+//
+
+    o17.cid.x = - 4;
+    o17.cid.y = - 100;
+    o17.cid.z =  -2;
+
+    o17.cig.x = 0.5;
+    o17.cig.y = -100;
+    o17.cig.z = -2;
+
+    o17.csd.x = -4;
+    o17.csd.y = -100;
+    o17.csd.z = 2;
+
+    o17.csg.x = 0.5;
+    o17.csg.y = -100;
+    o17.csg.z = 2;
+
+//
+
+    o18.cid.x = 2.5;
+    o18.cid.y = - 108;
+    o18.cid.z =  -2;
+
+    o18.cig.x = 4;
+    o18.cig.y = -108;
+    o18.cig.z = -2;
+
+    o18.csd.x = 2.5;
+    o18.csd.y = -108;
+    o18.csd.z = 2;
+
+    o18.csg.x = 4;
+    o18.csg.y = -108;
+    o18.csg.z = 2;
+
+//
+
+    o19.cid.x = - 4;
+    o19.cid.y = - 108;
+    o19.cid.z =  -2;
+
+    o19.cig.x = -0.5;
+    o19.cig.y = -108;
+    o19.cig.z = -2;
+
+    o19.csd.x = -4;
+    o19.csd.y = -108;
+    o19.csd.z = 2;
+
+    o19.csg.x = -0.5;
+    o19.csg.y = -108;
+    o19.csg.z = 2;
+
+//
+
+    o20.cid.x = 1.5;
+    o20.cid.y = - 116;
+    o20.cid.z =  -2;
+
+    o20.cig.x = 4;
+    o20.cig.y = -116;
+    o20.cig.z = -2;
+
+    o20.csd.x = 1.5;
+    o20.csd.y = -116;
+    o20.csd.z = 2;
+
+    o20.csg.x = 4;
+    o20.csg.y = -116;
+    o20.csg.z = 2;
+
+//
+
+    o21.cid.x = - 4;
+    o21.cid.y = - 116;
+    o21.cid.z =  -2;
+
+    o21.cig.x = -1.5;
+    o21.cig.y = -116;
+    o21.cig.z = -2;
+
+    o21.csd.x = -4;
+    o21.csd.y = -116;
+    o21.csd.z = 2;
+
+    o21.csg.x = -1.5;
+    o21.csg.y = -116;
+    o21.csg.z = 2;
+
+//
+
+    o22.cid.x = 0.5;
+    o22.cid.y = - 116;
+    o22.cid.z =  -2;
+
+    o22.cig.x = 4;
+    o22.cig.y = -116;
+    o22.cig.z = -2;
+
+    o22.csd.x = 0.5;
+    o22.csd.y = -116;
+    o22.csd.z = 2;
+
+    o22.csg.x = 4;
+    o22.csg.y = -116;
+    o22.csg.z = 2;
+
+//
+
+    o23.cid.x = - 4;
+    o23.cid.y = - 116;
+    o23.cid.z =  -2;
+
+    o23.cig.x = -2.5;
+    o23.cig.y = -116;
+    o23.cig.z = -2;
+
+    o23.csd.x = -4;
+    o23.csd.y = -116;
+    o23.csd.z = 2;
+
+    o23.csg.x = -2.5;
+    o23.csg.y = -116;
+    o23.csg.z = 2;
+
+//
 
     final.cid.x = -4;
     final.cid.y = -138;
@@ -188,8 +525,30 @@ void init_structures(struct Rect* line_speed,struct Rect* obstacle_list, float* 
     obstacle_list[1] = o2;
     obstacle_list[2] = o3;
     obstacle_list[3] = o4;
+    obstacle_list[4] = o5;
+    obstacle_list[5] = o6;
+    obstacle_list[6] = o7;
+    obstacle_list[7] = o8;
+    obstacle_list[8] = o9;
+    obstacle_list[9] = o10;
+    obstacle_list[10] = o11;
+    obstacle_list[11] = o12;
+    obstacle_list[12] = o13;
+    obstacle_list[13] = o14;
+    obstacle_list[14] = o15;
+    obstacle_list[15] = o16;
+    obstacle_list[16] = o17;
+    obstacle_list[17] = o18;
+    obstacle_list[18] = o19;
+    obstacle_list[19] = o20;
+    obstacle_list[20] = o21;
+    obstacle_list[21] = o22;
+    obstacle_list[22] = o23;
 
-    obstacle_list[4] = final;   
+
+
+
+    obstacle_list[23] = final;   
 
     b1.type = 'c';
     b1.pos.x = 1;
