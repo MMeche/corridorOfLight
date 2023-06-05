@@ -28,16 +28,17 @@ void drawSquare(float r,float g,float b) {
 	glEnd();
 }
 
-void score(GLuint textureID) {
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, textureID);
-	glBegin(GL_QUADS);
-		glVertex3f(-3.8, -2.1, -1.3);
-		glVertex3f(-3.8, -2.1, -1.9);
-		glVertex3f(-3.2, -2.1, -1.9);
-		glVertex3f(-3.2, -2.1, -1.3);
-	glEnd();
-	glDisable(GL_TEXTURE_2D);
+void score(GLuint texture) {
+	//glColor3f(1,1,1); 
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 1.0); glVertex3f(-3.2, -2.1, -2.6);
+    glTexCoord2f(0.0, 0.0); glVertex3f(-3.2, -2.1, -2.0);
+    glTexCoord2f(1.0, 0.0); glVertex3f(-3.8, -2.1, -2.0);
+    glTexCoord2f(1.0, 1.0); glVertex3f(-3.8, -2.1, -2.6);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
 }
 
 

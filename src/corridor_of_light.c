@@ -11,7 +11,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "../inc/stb_image.h"
 
-
 /* Window properties */
 static const unsigned int WINDOW_WIDTH = 1000;
 static const unsigned int WINDOW_HEIGHT = 1000;
@@ -130,31 +129,29 @@ void onMouseMove(GLFWwindow* window, double xpos, double ypos)
 	}
 }
 
-GLuint textureID1;
-GLuint textureID2;
+void erreur(unsigned char *image){
+    if(image != NULL){
+        printf("reussi \n");
+    }else{
+        printf("rate \n");
 
-
-void glGenTextures(GLsizei n, GLuint* textures);
-
-
-void loadTexture(const char* filename, GLuint* textureID) {
-    int width, height, channels;
-    unsigned char* image = stbi_load(filename, &width, &height, &channels, 0);
-
-    if (image == NULL) {
-        printf("Erreur lors du chargement de l'image : %s\n", filename);
-        return;
     }
-
-    glGenTextures(1, textureID);
-    glBindTexture(GL_TEXTURE_2D, *textureID);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-
-    stbi_image_free(image);
 }
 
-
+GLuint loadTexture(const char* imageName){
+    int x = 400;
+    int y = 400;
+    int n = 200;
+    int c = 0;
+    GLuint texture;
+    glGenTextures(1, &texture);
+    unsigned char* image = stbi_load(imageName, &x, &y, &n, c);
+    erreur(image);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    stbi_image_free(image);
+    return texture;
+}
 
 
 void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
@@ -283,6 +280,21 @@ int main(int argc, char** argv)
 	glfwSetCursorPosCallback(window, onMouseMove);
 	glfwSetMouseButtonCallback(window,mouse_button_callback);
 
+    //########_CHARGER_IMAGES_###################
+    GLuint texture[32];
+
+    // Charger image menu
+    texture[0] = loadTexture("doc/logo_imac.jpg");
+
+    // Charger image fin réussite
+    //texture[1] = loadTexture("doc/JEU_ECHEC.jpg");
+
+    // Charger image fin réussite
+    //texture[2] = loadTexture("doc/POKEBALL_TEXTURE.jpg");
+
+    glfwSetWindowSizeCallback(window,onWindowResized);
+
+
     onWindowResized(window, WINDOW_WIDTH, WINDOW_HEIGHT);
 
     glPointSize(5.0);
@@ -319,13 +331,6 @@ int main(int argc, char** argv)
 			}
 		
 		
-		glGenTextures(1, &textureID1);
-		glGenTextures(1, &textureID2);
-
-
-		glGenTextures(1, &textureID1);
-		glGenTextures(1, &textureID2);
-
 			
 			if(menu == 0)
 			{
@@ -342,6 +347,26 @@ int main(int argc, char** argv)
 				drawTakeable();
 				
 				drawBallz();
+
+				glPushMatrix();
+					glTranslatef(0.,-40.,0.);	
+					glRotatef(90.,1.,0.,0.);
+					glScalef(60.,60.,0.);			
+					drawSquare(0.,0.,0.);
+				glPopMatrix();
+				glPushMatrix();
+				glColor3f(1,1,1); 
+            glBindTexture(GL_TEXTURE_2D, texture[1]);
+					score(texture[1]);
+					glTranslatef(0.6, 0., 0.);
+					score(texture[1]);
+					glTranslatef(0.6, 0., 0.);
+					score(texture[1]);
+					glTranslatef(0.6, 0., 0.);
+					score(texture[1]);
+				glPopMatrix();	
+
+			glEnd();
 				//Pour gérer les parties : il va y avoir une liste d'obstacles (nombre fixe, générés aléatoirement ou non).
 				//Une fois que tous les obstacles sont passés, la partie se termine. 
 			
@@ -382,6 +407,9 @@ int main(int argc, char** argv)
 		}
 		rotation += 3;
 		
+		glBindTexture(GL_TEXTURE_2D, 0);
+        glDisable(GL_TEXTURE_2D);
+
         glfwSwapBuffers(window);
         glfwPollEvents();
         double elapsedTime = glfwGetTime() - startTime;
