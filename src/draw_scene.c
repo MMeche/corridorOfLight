@@ -157,12 +157,12 @@ void gameOver()
         glPushMatrix();
             glTranslatef(-1.2,-1.,-0.5);
             glScalef(2.,0.2,0.);
-            drawSquare(0.,0.,1.);
+            drawSquare(1.,0.,0.);
         glPopMatrix();
         glPushMatrix();
             glTranslatef(1.2,-1.,-0.5);
             glScalef(2.,0.2,0.);
-            drawSquare(1.,0.,0.);
+            drawSquare(0.,0.,1.);
         glPopMatrix();
 
 
