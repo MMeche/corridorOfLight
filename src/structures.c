@@ -1,13 +1,21 @@
 #include "../inc/structures.h"
 
 int totalObs = 5;
+int totalTake = 1;
 
 struct Rect obstacle_list[5];
 struct Rect line_speed[4];
+struct takeMe takeable_list[6];
 //struct Ball *balle;
 float balle[9];
 
+/*Coordonées de la raquette (y=-2.5) */
+float translate_x =0.f;
+float translate_y = 0.f;
+float sizeOfRaq = 0.5f;
 
+/*Tourner*/
+float rotation = 0.f;
 
 struct Rect o1;
 struct Rect o2;
@@ -26,7 +34,15 @@ struct Rect o14;
 
 struct Rect final;
 
-void init_structures(struct Rect* line_speed,struct Rect* obstacle_list, float* balle/*struct Ball* balle*/)
+struct takeMe b1;
+struct takeMe b2;
+struct takeMe b3;
+struct takeMe b4;
+struct takeMe m1;
+struct takeMe m2;
+
+
+void init_structures(struct Rect* line_speed,struct Rect* obstacle_list, float* balle/*struct Ball* balle*/, struct takeMe* takeable_list)
 {
     
     balle[0] = 0.f; //x
@@ -174,6 +190,39 @@ void init_structures(struct Rect* line_speed,struct Rect* obstacle_list, float* 
     obstacle_list[3] = o4;
 
     obstacle_list[4] = final;   
+
+    b1.type = 'c';
+    b1.pos.x = 1;
+    b1.pos.y = -6.5;
+    b1.pos.z = 1;
+
+    b2.type = 'r';
+    b2.pos.x = 1;
+    b2.pos.y = -6.5;
+    b2.pos.z = 1;
+
+    b3.type = 'g';
+    b3.pos.x = 1;
+    b3.pos.y = -6.5;
+    b3.pos.z = 1;
+
+    b4.type = 'v';
+    b4.pos.x = 1;
+    b4.pos.y = -6.5;
+    b4.pos.z = 1;
+
+    m1.type = 'a';
+    m1.pos.x = 1;
+    m1.pos.y = -6.5;
+    m1.pos.z = 1;
+
+    m2.type = 'p';
+    m2.pos.x = 1;
+    m2.pos.y = -6.5;
+    m2.pos.z = 1;
+
+
+    takeable_list[0] = b3;
 
 };
 

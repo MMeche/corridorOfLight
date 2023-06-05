@@ -1,31 +1,95 @@
 #include "../inc/interactions.h"
 
 float speed = 0.3f;
+int lives = 1;
 
 
 const float normal_ball_speed = 0.5f;
 const float speedy_ball_speed = 0.7f;
 const float cool_ball_speed = 0.3f;
 
-/*Coordonées de la raquette (y=-2.5) */
-float translate_x =0.f;
-float translate_y = 0.f;
+
 
 int state_right;
 
-void avance_joueur(struct Rect* line_speed,struct Rect* obstacle_list)
+void avance_joueur(struct Rect* line_speed,struct Rect* obstacle_list,struct takeMe* takeable_list)
 {
     int raquetteIsBlocked = 0;
+	/*On test si la raquette peut avancer*/
 	for(int i=0;i<totalObs;i++)
 	{
-		/*On test si la raquette peut avancer*/
+		
 		if((obstacle_list[i].cid.y<-2.5 && obstacle_list[i].cid.y + speed > -2.5)
-			&&((translate_x + 0.5 >= obstacle_list[i].cid.x)&&(translate_x + 0.5 <= obstacle_list[i].cig.x)||(translate_x - 0.5 >= obstacle_list[i].cid.x)&&(translate_x - 0.5 <= obstacle_list[i].cig.x))
-			&&((translate_y + 0.5 >= obstacle_list[i].cid.z)&&(translate_y + 0.5 <= obstacle_list[i].csd.z)||(translate_y - 0.5 >= obstacle_list[i].cid.z)&&(translate_y - 0.5 <= obstacle_list[i].csd.z)))
+			&&((translate_x + sizeOfRaq >= obstacle_list[i].cid.x)&&(translate_x + sizeOfRaq <= obstacle_list[i].cig.x)||(translate_x - sizeOfRaq >= obstacle_list[i].cid.x)&&(translate_x - sizeOfRaq <= obstacle_list[i].cig.x))
+			&&((translate_y + sizeOfRaq >= obstacle_list[i].cid.z)&&(translate_y + sizeOfRaq <= obstacle_list[i].csd.z)||(translate_y - sizeOfRaq >= obstacle_list[i].cid.z)&&(translate_y - sizeOfRaq <= obstacle_list[i].csd.z)))
 		{
 			raquetteIsBlocked = 1;
 		}
 	}
+
+	/*On test si la raquette rencontre un bonus/malus */
+	for(int i = 0; i<totalTake ;i++)
+	{
+		if((takeable_list[i].pos.y<-2.5 && takeable_list[i].pos.y+speed > -2.5)
+		&&((takeable_list[i].pos.x+0.25 >= translate_x-sizeOfRaq)&&(takeable_list[i].pos.x+0.25 <= translate_x+sizeOfRaq)||(takeable_list[i].pos.x-0.25 >= translate_x-sizeOfRaq)&&(takeable_list[i].pos.x-0.25 <= translate_x+sizeOfRaq))
+		&&((takeable_list[i].pos.z+0.25 >= translate_y-sizeOfRaq)&&(takeable_list[i].pos.z+0.25 <= translate_y+sizeOfRaq)||(takeable_list[i].pos.z-0.25 >= translate_y-sizeOfRaq)&&(takeable_list[i].pos.z-0.25 <= translate_y+sizeOfRaq)))
+		{
+			/*La bonus collant rajoute 3 sticky doses*/
+			if(takeable_list[i].type == 'c')
+			{
+				balle[7] += 3;
+			};
+			/*La vie bonus rajoute une vie*/
+			if(takeable_list[i].type == 'v')
+			{
+				lives ++;
+			};
+			/*Le bonus de ralenti, ralenti la balle*/
+			if(takeable_list[i].type == 'r')
+			{
+				balle[4] = balle[4]/balle[5];
+				balle[6] = balle[6]/balle[5];
+				if(balle[5]<0)
+				{
+					balle[5] = -cool_ball_speed;
+				}else{balle[5] = cool_ball_speed;}
+				
+				balle[4] = balle[4]*balle[5];
+				balle[6] = balle[6]*balle[5];
+				balle[8] -= 3;
+			};
+			/*Le malus accélère, accélère la balle*/
+			if(takeable_list[i].type == 'a')
+			{
+				balle[4] = balle[4]/balle[5];
+				balle[6] = balle[6]/balle[5];
+				if(balle[5]<0)
+				{
+					balle[5] = -speedy_ball_speed;
+				}else{balle[5] = speedy_ball_speed;}
+				balle[4] = balle[4]*balle[5];
+				balle[6] = balle[6]*balle[5];
+				balle[8] += 3;
+			};
+			/*Le bonus grandi, agrandit la taille de la raquette*/
+			if(takeable_list[i].type == 'g')
+			{
+				if(sizeOfRaq<0.75)
+				{
+					sizeOfRaq += 0.25f;
+				}
+			}
+			/*Le malus petit, rapettisse la raquette*/
+			if(takeable_list[i].type == 'p')
+			{
+				if(sizeOfRaq>0.25)
+				{
+					sizeOfRaq -= 0.25f;
+				}
+			}
+		}
+	}; 
+	/*On gère l'avancée du joueur sur tous les éléments (mur,lignes,bonus/malus)*/
 	if(raquetteIsBlocked == 0)
 	{
 		for(int i=0;i<4;i++)
@@ -60,16 +124,52 @@ void avance_joueur(struct Rect* line_speed,struct Rect* obstacle_list)
 			obstacle_list[i].csg.y += speed;
 			
 		}
+		
+		for(int i=0;i<totalTake;i++)
+		{
+			takeable_list[i].pos.y += speed;
+		};
 	};
 };	
 
 void avance_balle(float* balle)
 {
-	if(balle[7]!=0 && (balle[1]==-2.5f && (balle[0]<(translate_x)+0.5 && balle[0]>(translate_x)-0.5) && (balle[1]<(translate_y)+0.5 && balle[1]>(translate_y)-0.5))) //la balle est collante et est collée  : il faut qu'elle suive les mouvements de la raquettes.
+	if(balle[7]!=0 && (balle[1]+balle[5]+balle[3]>-2.5f && (balle[0]<(translate_x)+sizeOfRaq && balle[0]>(translate_x)-sizeOfRaq) && (balle[2]<(translate_y)+sizeOfRaq && balle[2]>(translate_y)-sizeOfRaq))) //la balle est collante et est collée  : il faut qu'elle suive les mouvements de la raquette.
 	{
 		balle[4] = 0.f;
 		balle[5] = 0.f;
 		balle[6] = 0.f;
+		balle[0] = translate_x;
+		balle[1] = -2.5;
+		balle[2] = translate_y;
+	}
+	else
+	{
+		/*Gestion des collisions avec la raquette*/
+		if(balle[1]+balle[5]+balle[3]>-2.5 && (balle[0] < (translate_x+sizeOfRaq) && balle[0] > (translate_x-sizeOfRaq)) && (balle[2] < (translate_y + sizeOfRaq) && balle[2] > (translate_y -sizeOfRaq)))
+		{
+		/*C'est la fonction de renvoi de la balle par la raquette (pour le moment simple rebond selon y)*/
+			if(balle[8]==0)
+			{
+				balle[5] = normal_ball_speed;
+			}
+			if(balle[8]<0)
+			{
+				balle[8]++;
+			};
+			if(balle[8]>0)
+			{
+				balle[8]--;
+			}
+			
+			
+			printf("non %f,%f\n",balle[8],balle[5]);
+			balle[5] = -balle[5];
+			float xDeviationRate = -(balle[0] - translate_x)/2;
+			float zDeviationRate = -(balle[2] - translate_y)/2;		
+			balle[4] = balle[5]*xDeviationRate;
+			balle[6] = balle[5]*zDeviationRate;			
+		}
 	}
 	//Gestion des collisions
 	if(balle[5]<0) 
@@ -81,9 +181,8 @@ void avance_balle(float* balle)
 			{
 				if((balle[0]+balle[4]+balle[3] >= obstacle_list[i].cid.x)&&(balle[0]+balle[4]-balle[3] <= obstacle_list[i].cig.x) // la balle est comprise 
 					&& (balle[2]+balle[6]+balle[3] >= obstacle_list[i].cid.z)&&(balle[2]+balle[6]-balle[3] <= obstacle_list[i].csd.z)
-					&& (balle[1]+balle[5]-balle[3] <= obstacle_list[i].cid.y))
+					&& (balle[1]+balle[5]-balle[3] <= obstacle_list[i].cid.y+(state_right*speed)))
 				{	
-					printf("oui");
 					balle[5] = -balle[5];
 				}		
 			}	
@@ -107,17 +206,6 @@ void avance_balle(float* balle)
 						};
 					}
 				};
-				/*Gestion des collisions avec la raquette*/
-				if(balle[1]+balle[5]+balle[3]>-2.5 && (balle[0] < (translate_x+0.5) && balle[0] > (translate_x-0.5)) && (balle[2] < (translate_y + 0.5) && balle[2] > (translate_y -0.5)))
-				{
-					/*C'est la fonction de renvoi de la balle par la raquette (pour le moment simple rebond selon y)*/
-					balle[5] = -balle[5];
-					float xDeviationRate = -(balle[0] - translate_x)/2;
-					float zDeviationRate = -(balle[2] - translate_y)/2;
-					
-					balle[4] = balle[5]*xDeviationRate;
-					balle[6] = balle[5]*zDeviationRate;			
-				}
 			};
 		};
 	/*Gestion des collisions avec les quatre murs d'enceinte*/
@@ -145,6 +233,9 @@ void avance_balle(float* balle)
 
    		balle[3] = 0.25f; //r
     	balle[7] = 1; //sticky doses
+
+		lives--;
+		printf("vies : %d\n",lives);
 	}
 	
 	

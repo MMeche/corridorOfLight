@@ -25,11 +25,6 @@ static const double FRAMERATE_IN_SECONDS = 1. / 30.;
 static int flag_animate_rot_scale = 0;
 static int flag_animate_rot_arm = 0;
 
-/* Speed Constant */
-
-
-
-
 /*Menu Handlers*/
 static int running = 0;
 static int rules = 0;
@@ -231,6 +226,20 @@ void mouse_button_callback(GLFWwindow* window,int button, int action, int mods)
 		{
 
 		};
+		/*Actions pour le game over*/
+		if(running == 1 && lives==0 && (y<715 && y>675))
+		{
+			printf("x : %f\n",x);
+			printf("y : %f\n",y);
+			if(x<460 && x>80)
+			{
+				new_game = 1;
+			}
+			if(x<920 && x>540)
+			{
+				quit = 1;
+			}
+		}
 	};
 	//Clic droit = Action "avancer" la raquette
 	if(button==GLFW_MOUSE_BUTTON_RIGHT && GLFW_PRESS)
@@ -292,8 +301,6 @@ int main(int argc, char** argv)
         glLoadIdentity();
 		setCamera();
 
-        /* Initial scenery setup */
-        drawFrame();
 
 		/* Scene rendering */
 		
@@ -303,7 +310,8 @@ int main(int argc, char** argv)
 			if(new_game == 1)
 			{
 				
-				init_structures(line_speed,obstacle_list,balle);
+				init_structures(line_speed,obstacle_list,balle,takeable_list);
+				lives =  5;
 				
 				//si c'est une nouvelle parie on recharge dans la liste une nouvelle serie d'obstacle,
 				//on remet le compteur de score à zéro, et on redonne toute ses vies au joueur.
@@ -318,33 +326,39 @@ int main(int argc, char** argv)
 		glGenTextures(1, &textureID1);
 		glGenTextures(1, &textureID2);
 
-			glPushMatrix();
-				glTranslatef(0.,-40.,0.);	
-				glRotatef(90.,1.,0.,0.);
-				glScalef(60.,60.,0.);			
-				drawSquare(0.,0.,0.);
-			glPopMatrix();
-
-			drawCorridor();	
-			drawLineSpeed();
-			drawObstacles();
-			
-			drawBallz();
-			//Pour gérer les parties : il va y avoir une liste d'obstacles (nombre fixe, générés aléatoirement ou non).
-			//Une fois que tous les obstacles sont passés, la partie se termine. 
 			
 			if(menu == 0)
 			{
+				glPushMatrix();
+					glTranslatef(0.,-40.,0.);	
+					glRotatef(90.,1.,0.,0.);
+					glScalef(60.,60.,0.);			
+					drawSquare(0.,0.,0.);
+				glPopMatrix();
+
+				drawCorridor();	
+				drawLineSpeed();
+				drawObstacles();
+				drawTakeable();
+				
+				drawBallz();
+				//Pour gérer les parties : il va y avoir une liste d'obstacles (nombre fixe, générés aléatoirement ou non).
+				//Une fois que tous les obstacles sont passés, la partie se termine. 
+			
 				drawRaquette(translate_x, translate_y);
 				if(state_right==GLFW_PRESS)
 				{
-					printf("%d\n",state_right);
-					avance_joueur(line_speed,obstacle_list);	
+					avance_joueur(line_speed,obstacle_list,takeable_list);	
 				};
 				avance_balle(balle);
 			};
 			//ballz();
 			//drawHUD();
+		}
+
+		if(lives==0)
+		{
+			gameOver();
 		}
 
 
@@ -366,7 +380,8 @@ int main(int argc, char** argv)
 			glfwSetWindowShouldClose(window, GLFW_TRUE);
 			return 0;
 		}
-
+		rotation += 3;
+		
         glfwSwapBuffers(window);
         glfwPollEvents();
         double elapsedTime = glfwGetTime() - startTime;

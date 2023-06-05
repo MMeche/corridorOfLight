@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "../inc/structures.h"
+#include "../inc/variables.h"
 
 #define NB_SEG_CIRCLE 64
 

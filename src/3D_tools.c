@@ -62,10 +62,10 @@ void drawRaquette(float x, float y) {
 		glTranslatef(x, -2.5, y);
 		glRotatef(90., 1., 0., 0.);
 		glBegin(GL_LINE_LOOP);
-			glVertex3f(-0.5, -0.5, 0.0);
-			glVertex3f(0.5, -0.5, 0.0);
-			glVertex3f(0.5, 0.5, 0.0);
-			glVertex3f(-0.5, 0.5, 0.0);
+			glVertex3f(-sizeOfRaq, -sizeOfRaq, 0.0);
+			glVertex3f(sizeOfRaq, -sizeOfRaq, 0.0);
+			glVertex3f(sizeOfRaq, sizeOfRaq, 0.0);
+			glVertex3f(-sizeOfRaq, sizeOfRaq, 0.0);
 		glEnd();
 	glPopMatrix();
 	
